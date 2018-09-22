@@ -3,5 +3,9 @@
 Some c++ lib easy to use
 
 ---
-* Lua
+* KinLua
     Easy C++ wapper with lua
+
+---
+* KinExcetpion
+    Kin Exception Support wapper with sdl
