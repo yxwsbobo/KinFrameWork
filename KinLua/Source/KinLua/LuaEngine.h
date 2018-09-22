@@ -14,7 +14,7 @@
 
 namespace KinLua
 {
-    using stringc = const std::string&;
+
 /**
  * @brief
  * @date 2018/9/22 0022
@@ -23,6 +23,7 @@ namespace KinLua
  */
     class LuaEngine
     {
+    public:
     public:
         LuaEngine();
 
@@ -33,21 +34,21 @@ namespace KinLua
          * @param FilePath
          * @return Original lua value
          */
-        int Load(const std::string& FilePath);
+        int Load(const std::string &FilePath);
 
         /**
          * @brief Load Lua code and run
          * @param Code
          * @return Original Lua value
          */
-        int LoadCode(const std::string& Code);
+        int LoadCode(const std::string &Code);
 
         /**
          * @brief Get Global variable value from lua engine
          * @param VarName The Global variable Name
          * @return The variable value
          */
-        LuaVariable GetValue(const std::string& VarName);
+        LuaVariable GetValue(const std::string &VarName);
 
         /**
          * @brief Call Lua Function
@@ -70,14 +71,14 @@ namespace KinLua
          * @param args
          */
         template <typename ...ArgTypes>
-        void CallR(const std::string& FunName,std::vector<LuaVariable>& Results,
-                ArgTypes&& ... args)
+        void CallR(const std::string &FunName, std::vector <LuaVariable> &Results,
+                   ArgTypes &&... args)
         {
             auto ArgNumbers = sizeof...(args);
 
             LuaPushGlobalVariable(FunName);
-            PushArgs(std::forward<ArgTypes>(args)...);
-            LuaCall(ArgNumbers,Results);
+            PushArgs(std::forward <ArgTypes>(args)...);
+            LuaCall(ArgNumbers, Results);
         }
 
         /**
@@ -90,8 +91,8 @@ namespace KinLua
         template <typename ...ArgTypes>
         LuaVariable CallR(const std::string &FunName, ArgTypes &&... args)
         {
-            std::vector<LuaVariable> Result{1};
-            CallR(FunName,Result,std::forward<ArgTypes>(args)...);
+            std::vector <LuaVariable> Result{1};
+            CallR(FunName, Result, std::forward <ArgTypes>(args)...);
             return Result[0];
         }
 
@@ -104,11 +105,14 @@ namespace KinLua
         }
 
     private:
-        void LuaPushGlobalVariable(const std::string& Name);
-        void LuaCall(int ArgNums, std::vector <LuaVariable>& ReturnValue);
+        void LuaPushGlobalVariable(const std::string &Name);
+
+        void LuaCall(int ArgNums, std::vector <LuaVariable> &ReturnValue);
 
         void LuaPushArg(const std::string &Arg);
+
         void LuaPushArg(int Number);
+
         void LuaPushArg(double Number);
 
 
@@ -116,6 +120,8 @@ namespace KinLua
         std::any Core;
 
     };
+
+};
 
 }
 #endif //KINLUA_LUAENGINE_H

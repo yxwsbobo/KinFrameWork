@@ -16,7 +16,7 @@ int main()
     Engine.LoadCode("ptFibona(10)");
 
     std::cout<<"Start To Call ---------"<<std::endl;
-    
+
     double a = Engine.CallR("callTest",3,5);
 
     std::cout<<"Result is :"<<a<<std::endl;

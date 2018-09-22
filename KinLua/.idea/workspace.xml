@@ -16,25 +16,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8524809f-2998-4865-afa7-ae9f266f38d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Examples/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Examples/main.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Examples/testLua.lua" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/KinLua/LuaEngine.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/KinLua/LuaVariable.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/KinLua/LuaVariable.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../KinCommonSetting.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../KinCommonSetting.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Kin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Kin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FindKinLua.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/FindKinLua.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KinLua.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KinLua/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KinLua/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KinLua/Lua.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KinLua/Lua.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KinLua/LuaEnumDefine.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KinLua/LuaEnumDefine.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lua.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KinLua/LuaEngine.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Examples/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Examples/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KinLua/LuaEngine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KinLua/LuaEngine.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KinLua/LuaEngine.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KinLua/LuaEngine.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug-visual-studio/" />
@@ -105,27 +90,27 @@
           <entry key="any" value="4" />
           <entry key="c" value="2" />
           <entry key="cmake" value="4" />
-          <entry key="cpp" value="28" />
-          <entry key="h" value="64" />
+          <entry key="cpp" value="32" />
+          <entry key="h" value="68" />
           <entry key="hpp" value="3" />
           <entry key="lua" value="7" />
-          <entry key="txt" value="14" />
+          <entry key="txt" value="15" />
           <entry key="xstring" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CMakeLists.txt" value="18" />
+          <entry key="CMakeLists.txt" value="19" />
           <entry key="Lua" value="7" />
-          <entry key="ObjectiveC" value="102" />
+          <entry key="ObjectiveC" value="110" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="1796" />
-          <entry key="h" value="2965" />
+          <entry key="cpp" value="1818" />
+          <entry key="h" value="3037" />
           <entry key="lua" value="406" />
-          <entry key="txt" value="128" />
+          <entry key="txt" value="144" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -133,8 +118,8 @@
           <entry key="CMakeLists.txt" value="106" />
           <entry key="Doxygen file" value="8" />
           <entry key="Lua" value="406" />
-          <entry key="ObjectiveC" value="4753" />
-          <entry key="PLAIN_TEXT" value="22" />
+          <entry key="ObjectiveC" value="4847" />
+          <entry key="PLAIN_TEXT" value="38" />
         </counts>
       </usages-collector>
     </session>
@@ -144,8 +129,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Examples/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+            <state relative-caret-position="190">
+              <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
               <folding>
                 <element signature="e#0#2#0" expanded="true" />
                 <element signature="e#97#114#0" expanded="true" />
@@ -157,11 +142,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/KinLua/LuaEngine.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="63" column="28" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
-              <folding>
-                <element signature="e#96#118#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="108">
+              <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -169,10 +151,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Source/KinLua/LuaEngine.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="99" column="39" lean-forward="true" selection-start-line="99" selection-start-column="39" selection-end-line="99" selection-end-column="39" />
+            <state relative-caret-position="109">
+              <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Source/KinLua/LuaVariable.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
               <folding>
-                <element signature="e#151#177#0" expanded="true" />
+                <element signature="e#155#172#0" expanded="true" />
+                <element signature="e#386#398#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -233,10 +225,10 @@
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/Source/Lua/lua.h" />
         <option value="$PROJECT_DIR$/Source/KinLua/LuaVariable.cpp" />
-        <option value="$PROJECT_DIR$/Source/KinLua/LuaVariable.h" />
         <option value="$PROJECT_DIR$/Examples/testLua.lua" />
-        <option value="$PROJECT_DIR$/Examples/main.cpp" />
         <option value="$PROJECT_DIR$/Source/KinLua/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/Source/KinLua/LuaVariable.h" />
+        <option value="$PROJECT_DIR$/Examples/main.cpp" />
         <option value="$PROJECT_DIR$/Source/KinLua/LuaEngine.h" />
         <option value="$PROJECT_DIR$/Source/KinLua/LuaEngine.cpp" />
       </list>
@@ -429,7 +421,7 @@
       <workItem from="1537596664153" duration="81000" />
       <workItem from="1537596771853" duration="736000" />
       <workItem from="1537597537112" duration="17458000" />
-      <workItem from="1537622044498" duration="843000" />
+      <workItem from="1537622044498" duration="1899000" />
     </task>
     <task id="LOCAL-00001" summary="test commit form clion">
       <created>1537590055410</created>
@@ -438,11 +430,18 @@
       <option name="project" value="LOCAL" />
       <updated>1537590055410</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add call lua">
+      <created>1537623005138</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1537623005138</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36767000" />
+    <option name="totallyTimeSpent" value="37823000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -457,7 +456,7 @@
     <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17006803" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17006803" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -479,6 +478,29 @@
       <window_info anchor="right" id="LuaJ" order="3" />
       <window_info anchor="right" id="Database" order="4" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17006803" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32802126" />
+      <window_info anchor="bottom" id="Run" order="2" type="SLIDING" weight="0.68260294" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" type="SLIDING" weight="0.32934928" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" order="8" type="SLIDING" weight="0.32802126" />
+      <window_info anchor="bottom" id="Terminal" order="9" type="SLIDING" weight="0.32802126" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="11" type="SLIDING" weight="0.32934928" />
+      <window_info anchor="bottom" id="CMake" order="12" type="SLIDING" weight="0.32802126" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="LuaJ" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -524,7 +546,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test commit form clion" />
-    <option name="LAST_COMMIT_MESSAGE" value="test commit form clion" />
+    <MESSAGE value="add call lua" />
+    <option name="LAST_COMMIT_MESSAGE" value="add call lua" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/library.cpp" />
@@ -685,24 +708,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/KinLua/LuaVariable.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="27">
           <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Source/KinLua/LuaVariable.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -713,13 +722,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Examples/main.cpp">
+    <entry file="file://$PROJECT_DIR$/Source/KinLua/LuaVariable.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        <state relative-caret-position="189">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/KinLua/LuaVariable.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
           <folding>
-            <element signature="e#0#2#0" expanded="true" />
-            <element signature="e#97#114#0" expanded="true" />
+            <element signature="e#155#172#0" expanded="true" />
+            <element signature="e#386#398#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -727,27 +743,32 @@
     <entry file="file://$PROJECT_DIR$/Source/KinLua/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
-          <caret line="6" column="38" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
+          <caret line="6" column="34" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Examples/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#2#0" expanded="true" />
+            <element signature="e#97#114#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/KinLua/LuaEngine.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="63" column="28" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
-          <folding>
-            <element signature="e#96#118#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="108">
+          <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/KinLua/LuaEngine.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="99" column="39" lean-forward="true" selection-start-line="99" selection-start-column="39" selection-end-line="99" selection-end-column="39" />
-          <folding>
-            <element signature="e#151#177#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="109">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
         </state>
       </provider>
     </entry>
