@@ -8,8 +8,6 @@ Some c++ lib easy to use
     Kin Basic Class
 
 ---
-
----
 > KinLog
 
     Easy to use Log wapper with spdlog
