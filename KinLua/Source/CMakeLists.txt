@@ -1,6 +1,7 @@
-project(luac)
-project(lua)
-project(LuaCore)
+#project(luac)
+#project(lua)
+#project(LuaCore)
+#
+#add_subdirectory(Lua)
 
-add_subdirectory(Lua)
 add_subdirectory(KinLua)

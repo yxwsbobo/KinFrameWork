@@ -1,6 +1,6 @@
 
 
-set(KinLua_INCLUDE_DIRS $ENV{KinBase}/KinLua)
+set(KinLua_INCLUDE_DIRS $ENV{KinBase}/KinLua/Source)
 set(KinLua_LIBRARIES_PATH $ENV{KinBase}/KinLua/bin/${CMAKE_CXX_COMPILER_ID}/${CMAKE_BUILD_TYPE})
 set(KinLua_LIBRARIES KinLua LuaCore)
 

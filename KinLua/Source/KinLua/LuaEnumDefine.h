@@ -5,13 +5,11 @@
 
 #ifndef KINLUA_LUAENUMDEFINE_H
 #define KINLUA_LUAENUMDEFINE_H
+
+
 namespace KinLua
 {
-    enum class ResultEnum : int
-    {
-        Success,
-        Failed
-    };
 
 }
+
 #endif //KINLUA_LUAENUMDEFINE_H

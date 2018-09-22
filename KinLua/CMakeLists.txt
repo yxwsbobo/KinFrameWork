@@ -6,5 +6,5 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} $ENV{KinBase})
 include(KinCommonSetting)
 
 add_subdirectory(Source)
-
+add_subdirectory(Examples)
 
