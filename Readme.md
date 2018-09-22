@@ -11,3 +11,5 @@ Some c++ lib easy to use
     Kin Exception Support wapper with sdl
 
 ---
+* EUI
+    Easy to use User Interface
