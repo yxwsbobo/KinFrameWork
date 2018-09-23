@@ -9,7 +9,6 @@
 #include "LuaEnumDefine.h"
 #include "LuaVariable.h"
 #include <string>
-#include <any>
 #include <vector>
 
 namespace KinLua
@@ -43,12 +42,7 @@ namespace KinLua
          */
         int LoadCode(const std::string &Code);
 
-        /**
-         * @brief Get Global variable value from lua engine
-         * @param VarName The Global variable Name
-         * @return The variable value
-         */
-        LuaVariable GetValue(const std::string &VarName);
+        LuaVariable operator[](const std::string& Name);
 
         /**
          * @brief Call Lua Function
@@ -117,11 +111,9 @@ namespace KinLua
 
 
     private:
-        std::any Core;
+        void* Core;
 
     };
-
-};
 
 }
 #endif //KINLUA_LUAENGINE_H

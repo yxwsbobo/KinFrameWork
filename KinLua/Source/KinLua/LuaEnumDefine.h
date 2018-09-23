@@ -9,7 +9,14 @@
 
 namespace KinLua
 {
-
+    enum class LuaValueType
+    {
+        String,
+        Integer,
+        Real,
+        Function,
+        Table
+    };
 }
 
 #endif //KINLUA_LUAENUMDEFINE_H

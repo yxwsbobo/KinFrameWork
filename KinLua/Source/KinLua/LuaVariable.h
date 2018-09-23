@@ -6,8 +6,10 @@
 #ifndef KINLUA_LUAVARIABLE_H
 #define KINLUA_LUAVARIABLE_H
 
+#include "LuaEnumDefine.h"
+
 #include <string>
-#include <any>
+#include <vector>
 
 namespace KinLua
 {
@@ -21,24 +23,30 @@ namespace KinLua
     class LuaVariable
     {
     public:
-        template <typename T>
-        LuaVariable(const T& val)
+
+        LuaVariable(void *Core, int Index, LuaValueType Type);
+
+        ~LuaVariable();
+
+        LuaVariable operator[](const std::string& Name);
+
+        template <typename ...ArgTypes>
+        std::vector <KinLua::LuaVariable> operator()(ArgTypes && ... args)
         {
-            Value = val;
+
         }
-
-        LuaVariable() = default;
-
-        ~LuaVariable() = default;
 
         template <typename T>
         operator T()
         {
-            return std::any_cast<T>(Value);
+//            return std::any_cast<T>(Value);
         }
 
     private:
-        std::any Value;
+        void* Core;
+        int Index;
+        LuaValueType Type;
+
     };
 
 }

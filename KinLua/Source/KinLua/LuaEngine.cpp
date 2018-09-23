@@ -4,74 +4,72 @@
 //
 
 #include "LuaEngine.h"
-
 #include "../Lua/lua.hpp"
 
 #include <iostream>
 
-using LuaCoreType = lua_State;
-
-static LuaCoreType *gtLua(std::any &anyLua)
+namespace KinLua
 {
-    return std::any_cast <LuaCoreType *>(anyLua);
+    using Lua = lua_State*;
 }
 
 KinLua::LuaEngine::LuaEngine()
         : Core{luaL_newstate()}
 {
-    luaL_openlibs(gtLua(Core));
+    luaL_openlibs(Lua(Core));
 }
 
 KinLua::LuaEngine::~LuaEngine()
 {
-    if(Core.has_value())
+    if(Core != nullptr)
     {
-        lua_close(gtLua(Core));
+        lua_close(Lua(Core));
     }
     Core = nullptr;
 }
 
 int KinLua::LuaEngine::Load(const std::string &FilePath)
 {
-    return luaL_dofile(gtLua(Core), FilePath.c_str());
+    return luaL_dofile(Lua(Core), FilePath.c_str());
 }
 
 int KinLua::LuaEngine::LoadCode(const std::string &Code)
 {
-    return luaL_dostring(gtLua(Core), Code.c_str());
+    return luaL_dostring(Lua(Core), Code.c_str());
 }
 
-KinLua::LuaVariable KinLua::LuaEngine::GetValue(const std::string &VarName)
+KinLua::LuaVariable KinLua::LuaEngine::operator[](const std::string &Name)
 {
+    auto Type = lua_getglobal(Lua(Core),Name.c_str());
     return KinLua::LuaVariable();
 }
 
 void KinLua::LuaEngine::LuaPushGlobalVariable(const std::string &Name)
 {
-    lua_getglobal(gtLua(Core), Name.c_str());
+    lua_getglobal(Lua(Core), Name.c_str());
 }
 
 void KinLua::LuaEngine::LuaCall(int ArgNums, std::vector <LuaVariable> &ReturnValue)
 {
-    lua_call(gtLua(Core), ArgNums, ReturnValue.size());
-    ReturnValue[0] = lua_tonumber(gtLua(Core), -1);
+    lua_call(Lua(Core), ArgNums, ReturnValue.size());
+    ReturnValue[0] = lua_tonumber(Lua(Core), -1);
 }
 
 void KinLua::LuaEngine::LuaPushArg(const std::string &Arg)
 {
     std::cout << "in Push String :" << Arg << std::endl;
-    lua_pushlstring(gtLua(Core), Arg.c_str(), Arg.size());
+    lua_pushlstring(Lua(Core), Arg.c_str(), Arg.size());
 }
 
 void KinLua::LuaEngine::LuaPushArg(int Number)
 {
     std::cout << "in PushInt:" << Number << std::endl;
-    lua_pushinteger(gtLua(Core), Number);
+    lua_pushinteger(Lua(Core), Number);
 }
 
 void KinLua::LuaEngine::LuaPushArg(double Number)
 {
     std::cout << "in Push double :" << Number << std::endl;
-    lua_pushnumber(gtLua(Core), Number);
+    lua_pushnumber(Lua(Core), Number);
 }
 

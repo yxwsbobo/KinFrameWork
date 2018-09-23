@@ -1,6 +1,9 @@
 # KinFrameWork
 
-Some c++ lib easy to use
+Some some c++ very useful lib
+Some lib is opensource
+some lib wapper opensource
+some lib write by me
 
 ---
 > KinBase
