@@ -26,27 +26,6 @@ end
 
 function callTest(a,b)
     print("compute a + b")
-    return a + b, 26
+    return a + b, 26, 31, 0, 2
 end
 
-function test(var)
-    if (var) then
-        print(Age)
-        local Age = var
-    else
-        print("init")
-        local Age = 30
-    end
-
-    return Age
-end
-
-temp = test()
-
-temp = 20
-
-test(60)
-
-test(10)
-
-print("over")

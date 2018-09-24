@@ -16,6 +16,16 @@
 namespace KinLua
 {
 
+#define LuaSetValueMemberFunction(Name)                                     \
+void Name(bool Value);                                                      \
+void Name(double Value);                                                    \
+void Name(long long Value);                                                 \
+void Name(const std::string& Value);                                        \
+void Name(int Value){return Name((long long)Value);}                        \
+void Name(unsigned int Value){return Name((long long)Value);}               \
+void Name(unsigned long long Value){return Name((long long)Value);}
+
+
 /**
  * @brief
  * @date 2018/9/22 0022
@@ -25,13 +35,30 @@ namespace KinLua
     class LuaVariable
     {
     public:
+        LuaVariable() = delete;
+
+        LuaVariable(const LuaVariable &) = delete;
+
+        LuaVariable &operator=(LuaVariable &var) = delete;
+
+        LuaVariable(LuaVariable &&var) noexcept;
+
+        LuaVariable &operator=(LuaVariable &&var) noexcept;
         ~LuaVariable();
 
         LuaValueType GetType();
 
         LuaVariable operator[](const std::string& Name);
 
+        LuaVariable operator[](int tIndex);
+
         operator bool();
+
+        operator double();
+
+        operator long long();
+
+        operator std::string();
 
         inline operator int()
         {
@@ -43,16 +70,10 @@ namespace KinLua
             return (unsigned int) int(*this);
         };
 
-        operator double();
-
-        operator long long();
-
         inline operator unsigned long long()
         {
             return (unsigned long long) (long long) (*this);
         }
-
-        operator std::string();
 
         template <typename T>
         inline T get()
@@ -60,29 +81,13 @@ namespace KinLua
             return T(*this);
         }
 
-        bool operator=(bool Value);
-
-        inline int operator=(int Value)
+        template <typename T>
+        inline const T &&operator=(const T &&Value)
         {
-            return static_cast<int>(*this = (long long) Value);
+            MakeSpaceValid(1);
+            SetValue(std::forward <T>(Value));
+            return Value;
         }
-
-        inline unsigned int operator=(unsigned int Value)
-        {
-            return static_cast<unsigned int>(*this = (int) Value);
-        }
-
-        double operator=(double Value);
-
-        long long operator=(long long Value);
-
-        inline unsigned long long operator=(unsigned long long Value)
-        {
-            return static_cast<unsigned long long int>(*this = (long long) Value);
-        }
-
-        std::string operator=(const std::string &Value);
-
 
         template <typename ...ArgTypes>
         std::vector <KinLua::LuaVariable> operator()(ArgTypes && ... args)
@@ -101,7 +106,7 @@ namespace KinLua
                 {
                     PushSelf();
                     (PushValue(std::forward <ArgTypes>(args)),...);
-                    return LuaCall(NumberOfArgs);
+                    return std::move(LuaCall(NumberOfArgs));
                 }
 
                 default:
@@ -122,35 +127,19 @@ namespace KinLua
 
         void PushSelf();
 
-        void PushValue(bool Value);
+        KinLua::LuaValueType GetSelfType();
 
-        inline void PushValue(int Value)
-        {
-            return PushValue((long long) Value);
-        }
+        LuaSetValueMemberFunction(PushValue)
 
-        inline void PushValue(unsigned int Value)
-        {
-            return PushValue((int) Value);
-        };
-
-        void PushValue(double Value);
-
-        void PushValue(long long Value);
-
-        inline void PushValue(unsigned long long Value)
-        {
-            return PushValue((long long) Value);
-        }
-
-        void PushValue(const std::string &Value);
+        LuaSetValueMemberFunction(SetValue)
 
 
     private:
         friend class LuaEngine;
 
         //Todo Different Local and Global?
-        LuaVariable(const std::weak_ptr <LuaCoreType> &Core, int Index = 0);
+        LuaVariable(const std::weak_ptr <LuaCoreType> &Core,
+                    const std::string &Name = "Core", int Index = 0);
 
         inline std::shared_ptr <LuaCoreType> GetCore()
         {
@@ -159,11 +148,12 @@ namespace KinLua
             return Lua;
         }
 
-        inline LuaVariable CreateFromIndex(int Index);
+        inline LuaVariable CreateFromIndex(int Index, const std::string &Name);
 
     private:
         std::weak_ptr <LuaCoreType> Core;
         int Index;
+        std::string KeyName;
 
     };
 

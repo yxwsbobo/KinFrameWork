@@ -9,27 +9,76 @@
 
 #include "../Lua/lua.hpp"
 
+#include <iostream>
 
-KinLua::LuaVariable::LuaVariable(const std::weak_ptr <KinLua::LuaCoreType> &Core, int Index)
-        : Core(Core), Index(Index)
+KinLua::LuaVariable::LuaVariable(const std::weak_ptr <KinLua::LuaCoreType> &Core,
+                                 const std::string &Name, int Index)
+        : Core(Core), KeyName{Name}, Index(Index)
 {
+    std::cout << "Create Index is :" << Index << ",Name is :" << KeyName << std::endl;
+}
+
+KinLua::LuaVariable::LuaVariable(KinLua::LuaVariable &&var) noexcept
+{
+    Core = std::move(var.Core);
+    Index = var.Index;
+    KeyName = std::move(var.KeyName);
+
+    var.Core.reset();
+    var.Index = 0;
+}
+
+
+KinLua::LuaVariable &KinLua::LuaVariable::operator=(KinLua::LuaVariable &&var) noexcept
+{
+    //Todo Delete old
+    if(Index)
+    {
+        std::cout << "Need to Free me, Name is :" << KeyName << "Index is :" << Index;
+    }
+
+    Core = std::move(var.Core);
+    Index = var.Index;
+    KeyName = std::move(var.KeyName);
+
+    var.Core.reset();
+    var.Index = 0;
+    return *this;
 }
 
 KinLua::LuaVariable::~LuaVariable()
 {
-    auto Lua = GetCore();
-    auto End = lua_gettop(Lua.get());
-
-    Must(End != 0);
-
-    if(End == Index)
+    if(!Index)
     {
-        lua_pop(Lua.get(), 1);
+        return;
     }
-    else
+    if(!Core.lock())
     {
-        //Todo Need to think
+        return;
     }
+    try
+    {
+        auto Lua = GetCore();
+        auto End = lua_gettop(Lua.get());
+
+        Must(End != 0);
+
+        if(End == Index)
+        {
+            lua_pop(Lua.get(), 1);
+            std::cout << "Success Free Current :" << Index << "End :" << End << ",Name is :" << KeyName << std::endl;
+        }
+        else
+        {
+            //Todo Need to think
+            std::cout << "Current :" << Index << "Last :" << End << ",Name is :" << KeyName << std::endl;
+        }
+    }
+    catch(...)
+    {
+        std::cout << "LuaVariable Free exception" << std::endl;
+    }
+
 
 
 //    auto Type = GetType();
@@ -50,7 +99,7 @@ KinLua::LuaVariable::~LuaVariable()
 
 }
 
-KinLua::LuaVariable KinLua::LuaVariable::CreateFromIndex(int Index)
+KinLua::LuaVariable KinLua::LuaVariable::CreateFromIndex(int Index, const std::string &Name)
 {
     auto Lua = GetCore();
 
@@ -59,7 +108,7 @@ KinLua::LuaVariable KinLua::LuaVariable::CreateFromIndex(int Index)
         Index = lua_absindex(Lua.get(), Index);
     }
 
-    return KinLua::LuaVariable{Core, Index};
+    return KinLua::LuaVariable{Core, Name, Index};
 }
 
 KinLua::LuaValueType KinLua::LuaVariable::GetType()
@@ -67,11 +116,10 @@ KinLua::LuaValueType KinLua::LuaVariable::GetType()
     auto Lua = GetCore();
     if(!Index)
     {
-        return LuaValueType::Environment;
+        return GetSelfType();
     }
     return LuaValueType::_from_integral(lua_type(Lua.get(), Index));
 }
-
 
 KinLua::LuaVariable KinLua::LuaVariable::operator[](const std::string& Name)
 {
@@ -85,7 +133,7 @@ KinLua::LuaVariable KinLua::LuaVariable::operator[](const std::string& Name)
         {
             MakeSpaceValid(1);
             lua_getglobal(Lua.get(), Name.c_str());
-            return CreateFromIndex(-1);
+            return CreateFromIndex(-1, Name);
         }
 
         default:
@@ -96,67 +144,39 @@ KinLua::LuaVariable KinLua::LuaVariable::operator[](const std::string& Name)
     return LuaVariable{Core};
 }
 
+KinLua::LuaVariable KinLua::LuaVariable::operator[](int)
+{
+    return KinLua::LuaVariable(Core);
+}
+
 KinLua::LuaVariable::operator bool()
 {
     auto Lua = GetCore();
-    Must(lua_isboolean(Lua.get(), Index));
 
-    auto Result = lua_toboolean(Lua.get(), Index);
-
-    return static_cast<bool>(Result);
+    return static_cast<bool>(lua_toboolean(Lua.get(), Index));
 }
 
 KinLua::LuaVariable::operator double()
 {
     auto Lua = GetCore();
 
-    Must(lua_isnumber(Lua.get(), Index));
-
-    auto Result = lua_tonumber(Lua.get(), Index);
-
-    return Result;
+    return lua_tonumber(Lua.get(), Index);
 }
 
 KinLua::LuaVariable::operator long long()
 {
     auto Lua = GetCore();
 
-    Must(lua_isinteger(Lua.get(), Index));
-
-    auto Result = lua_tointeger(Lua.get(), Index);
-
-    return Result;
+    return lua_tointeger(Lua.get(), Index);
 }
 
 KinLua::LuaVariable::operator std::string()
 {
     auto Lua = GetCore();
 
-    Must(lua_isstring(Lua.get(), Index));
-
-    auto Result = lua_tostring(Lua.get(), Index);
-
-    return Result;
-}
-
-bool KinLua::LuaVariable::operator=(bool Value)
-{
-    return false;
-}
-
-double KinLua::LuaVariable::operator=(double Value)
-{
-    return 0;
-}
-
-long long KinLua::LuaVariable::operator=(long long Value)
-{
-    return 0;
-}
-
-std::string KinLua::LuaVariable::operator=(const std::string &Value)
-{
-    return "";
+    size_t Size;
+    auto str = lua_tolstring(Lua.get(), Index, &Size);
+    return std::string(str, Size);
 }
 
 std::vector <KinLua::LuaVariable> KinLua::LuaVariable::LuaCall(int Size)
@@ -169,14 +189,16 @@ std::vector <KinLua::LuaVariable> KinLua::LuaVariable::LuaCall(int Size)
 
     Must(End > Begin, "UnBelievable things happened!");
 
-    std::vector <KinLua::LuaVariable> Result(std::vector <LuaVariable>::size_type(End - Begin), Core);
+    std::vector <KinLua::LuaVariable> Result;
 
-    for(auto &&result : Result)
+    while(End > Begin)
     {
-        result.Index = ++Begin;
+        CreateFromIndex(End--, "Return");
+//        Result.push_back(CreateFromIndex(Begin,"Return"));
     }
 
     return std::move(Result);
+
 }
 
 void KinLua::LuaVariable::MakeSpaceValid(int Size)
@@ -185,9 +207,17 @@ void KinLua::LuaVariable::MakeSpaceValid(int Size)
     Should(lua_checkstack(Lua.get(), Size));
 }
 
+KinLua::LuaValueType KinLua::LuaVariable::GetSelfType()
+{
+    return KinLua::LuaValueType::Environment;
+}
+
 void KinLua::LuaVariable::PushSelf()
 {
     auto Lua = GetCore();
+    auto Type = GetType();
+    //Todo
+    MakeSpaceValid(1);
     lua_pushvalue(Lua.get(), Index);
 }
 
@@ -209,9 +239,33 @@ void KinLua::LuaVariable::PushValue(long long Value)
     lua_pushinteger(Lua.get(), Value);
 }
 
-
 void KinLua::LuaVariable::PushValue(const std::string &Value)
 {
     auto Lua = GetCore();
     lua_pushlstring(Lua.get(), Value.c_str(), Value.size());
 }
+
+void KinLua::LuaVariable::SetValue(bool Value)
+{
+    auto Lua = GetCore();
+
+}
+
+void KinLua::LuaVariable::SetValue(double Value)
+{
+    auto Lua = GetCore();
+}
+
+void KinLua::LuaVariable::SetValue(long long Value)
+{
+    auto Lua = GetCore();
+}
+
+void KinLua::LuaVariable::SetValue(const std::string &Value)
+{
+    auto Lua = GetCore();
+
+}
+
+
+

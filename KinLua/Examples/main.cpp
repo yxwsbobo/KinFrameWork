@@ -14,9 +14,16 @@ int main()
 
     Engine.Run("../../../Examples/testLua.lua");
 
+    Engine["callTest"](5, 10);
+
+    std::cout << "start output" << std::endl;
+
+//    for(auto &item : List)
+//    {
+//        int a = item;
 //
-//    auto [Result,var] = Engine["callTest"](5,10);
-//
-//    std::cout<<"Result is "<<Result<<std::endl;
+//        std::cout<<"Receive :"<<a<<std::endl;
+//    }
+
     return 0;
 }
