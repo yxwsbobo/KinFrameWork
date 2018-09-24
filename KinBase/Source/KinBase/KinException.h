@@ -120,7 +120,7 @@ namespace KinBase
 #define Must(Condition, ...)                                             \
 (void)(                                                                  \
 (!!(Condition)) ||                                                       \
-        (KinBase::KinException::Throw<KinBase::MustException>(    \
+        (KinBase::KinException::Throw<KinBase::MustException>(           \
         #Condition,                                                      \
         MACRO_GET_FILE_NAME(),                                           \
         __FUNCTION__,                                                    \
@@ -132,7 +132,7 @@ namespace KinBase
 #define Should(Condition, ...)                                           \
 (void)(                                                                  \
 (!!(Condition)) ||                                                       \
-        (KinBase::KinException::Throw<KinBase::ShouldException>(  \
+        (KinBase::KinException::Throw<KinBase::ShouldException>(         \
         #Condition,                                                      \
         MACRO_GET_FILE_NAME(),                                           \
         __FUNCTION__,                                                    \

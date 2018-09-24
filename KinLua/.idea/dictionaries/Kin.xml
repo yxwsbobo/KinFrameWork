@@ -2,6 +2,7 @@
   <dictionary name="Kin">
     <words>
       <w>jihuisoft</w>
+      <w>std::string</w>
     </words>
   </dictionary>
 </component>

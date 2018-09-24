@@ -12,14 +12,11 @@ int main()
 {
     KinLua::LuaEngine Engine;
 
-    Engine.Load("../../../Examples/testLua.lua");
-    Engine.LoadCode("ptFibona(10)");
+    Engine.Run("../../../Examples/testLua.lua");
 
-    std::cout<<"Start To Call ---------"<<std::endl;
-
-    double a = Engine.CallR("callTest",3,5);
-
-    std::cout<<"Result is :"<<a<<std::endl;
-
+//
+//    auto [Result,var] = Engine["callTest"](5,10);
+//
+//    std::cout<<"Result is "<<Result<<std::endl;
     return 0;
 }

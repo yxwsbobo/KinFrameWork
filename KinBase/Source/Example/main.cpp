@@ -15,7 +15,7 @@ namespace NSpace
     public:
         void RunSomeCode()
         {
-            Must(5 == 0, "must error");
+            Must(5 != 0, "must error");
 
             Should(5 == 0, "should error");
 

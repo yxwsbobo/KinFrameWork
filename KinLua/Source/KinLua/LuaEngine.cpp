@@ -8,68 +8,33 @@
 
 #include <iostream>
 
-namespace KinLua
+static void LuaCoreDeleter(lua_State *e)
 {
-    using Lua = lua_State*;
+    try
+    {
+        if(e != nullptr)
+        {
+            lua_close(e);
+        }
+    }
+    catch(...)
+    {
+
+    }
 }
 
 KinLua::LuaEngine::LuaEngine()
-        : Core{luaL_newstate()}
+        : Core{luaL_newstate(), LuaCoreDeleter}
 {
-    luaL_openlibs(Lua(Core));
+    luaL_openlibs(Core.get());
 }
 
-KinLua::LuaEngine::~LuaEngine()
+int KinLua::LuaEngine::Run(const std::string &FilePath)
 {
-    if(Core != nullptr)
-    {
-        lua_close(Lua(Core));
-    }
-    Core = nullptr;
+    return luaL_dofile(Core.get(), FilePath.c_str());
 }
 
-int KinLua::LuaEngine::Load(const std::string &FilePath)
+int KinLua::LuaEngine::RunCode(const std::string &Code)
 {
-    return luaL_dofile(Lua(Core), FilePath.c_str());
+    return luaL_dostring(Core.get(), Code.c_str());
 }
-
-int KinLua::LuaEngine::LoadCode(const std::string &Code)
-{
-    return luaL_dostring(Lua(Core), Code.c_str());
-}
-
-KinLua::LuaVariable KinLua::LuaEngine::operator[](const std::string &Name)
-{
-    auto Type = lua_getglobal(Lua(Core),Name.c_str());
-    return KinLua::LuaVariable();
-}
-
-void KinLua::LuaEngine::LuaPushGlobalVariable(const std::string &Name)
-{
-    lua_getglobal(Lua(Core), Name.c_str());
-}
-
-void KinLua::LuaEngine::LuaCall(int ArgNums, std::vector <LuaVariable> &ReturnValue)
-{
-    lua_call(Lua(Core), ArgNums, ReturnValue.size());
-    ReturnValue[0] = lua_tonumber(Lua(Core), -1);
-}
-
-void KinLua::LuaEngine::LuaPushArg(const std::string &Arg)
-{
-    std::cout << "in Push String :" << Arg << std::endl;
-    lua_pushlstring(Lua(Core), Arg.c_str(), Arg.size());
-}
-
-void KinLua::LuaEngine::LuaPushArg(int Number)
-{
-    std::cout << "in PushInt:" << Number << std::endl;
-    lua_pushinteger(Lua(Core), Number);
-}
-
-void KinLua::LuaEngine::LuaPushArg(double Number)
-{
-    std::cout << "in Push double :" << Number << std::endl;
-    lua_pushnumber(Lua(Core), Number);
-}
-
