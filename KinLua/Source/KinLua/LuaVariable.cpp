@@ -8,6 +8,7 @@
 #include "LuaVariable.h"
 
 #include "../Lua/lua.hpp"
+#include "../Lua/KinLuaSupportInterface.h"
 
 #include <iostream>
 

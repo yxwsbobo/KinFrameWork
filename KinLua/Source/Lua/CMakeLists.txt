@@ -66,5 +66,5 @@ add_library(LuaCore
         lvm.c
         lvm.h
         lzio.c
-        lzio.h)
+        lzio.h KinLuaSupportInterface.cpp KinLuaSupportInterface.h)
 

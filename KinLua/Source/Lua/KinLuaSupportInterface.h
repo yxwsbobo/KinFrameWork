@@ -6,8 +6,17 @@
 #ifndef KINLUA_KINLUASUPPORTINTERFACE_H
 #define KINLUA_KINLUASUPPORTINTERFACE_H
 
+#include "lua.hpp"
 namespace KinLua
 {
+    namespace Interface
+    {
+        template <typename T>
+        void SetValue(T&& Value)
+        {
+//            lua_pop;
+        }
+    }
 
 /**
  * @brief
@@ -21,6 +30,7 @@ namespace KinLua
         KinLuaSupportInterface() = default;
 
         ~KinLuaSupportInterface() = default;
+
 
     };
 
