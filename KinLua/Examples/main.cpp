@@ -14,16 +14,21 @@ int main()
 
     Engine.Run("../../../Examples/testLua.lua");
 
-    Engine["callTest"](5, 10);
+
+    auto List = Engine["ComputeAdd"](5, 10);
 
     std::cout << "start output" << std::endl;
 
-//    for(auto &item : List)
-//    {
-//        int a = item;
-//
-//        std::cout<<"Receive :"<<a<<std::endl;
-//    }
+    for(auto &item : List)
+    {
+        int a = item;
+
+        std::cout<<"Receive :"<<a<<std::endl;
+    }
+
+    std::string Name = Engine["Name"];
+    std::cout<<Name<<" is "<< Engine["Age"].get<int>()<<std::endl;
+
 
     return 0;
 }

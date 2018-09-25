@@ -25,7 +25,16 @@ function ptFibona(nums)
 end
 
 function callTest(a,b)
-    print("compute a + b")
-    return a + b, 26, 31, 0, 2
+    print("compute a + b",a,",",b)
+    return a + b
+end
+
+Age = 31;
+Name = "Kin"
+
+
+function ComputeAdd(a,b)
+    print("compute a + b",a,",",b)
+    return a + b
 end
 

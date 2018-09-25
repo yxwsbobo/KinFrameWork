@@ -194,8 +194,7 @@ std::vector <KinLua::LuaVariable> KinLua::LuaVariable::LuaCall(int Size)
 
     while(End > Begin)
     {
-        CreateFromIndex(End--, "Return");
-//        Result.push_back(CreateFromIndex(Begin,"Return"));
+        Result.push_back(CreateFromIndex(End--,"Return"));
     }
 
     return std::move(Result);
