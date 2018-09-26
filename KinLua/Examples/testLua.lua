@@ -5,36 +5,14 @@
 -- Copyright © 2018 jihuisoft. All rights reserved.
 --
 
-print("hello World, i'm in testLua.lua")
+People = {}
 
+People.Name = "Kin"
 
-function ptFibona(nums)
-    print("斐波拉序列:")
+People.Age = 32;
 
-    local firstNumber = 1
-    local secondNumber = 1
+print(People.Name)
 
-    print(firstNumber)
+print(People.Age)
 
-    for i= 1,nums do
-        firstNumber,secondNumber = secondNumber, firstNumber + secondNumber
-        print(firstNumber)
-
-    end
-
-end
-
-function callTest(a,b)
-    print("compute a + b",a,",",b)
-    return a + b
-end
-
-Age = 31;
-Name = "Kin"
-
-
-function ComputeAdd(a,b)
-    print("compute a + b",a,",",b)
-    return a + b
-end
-
+print("hello");

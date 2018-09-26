@@ -147,7 +147,7 @@ KinLua::LuaVariable KinLua::LuaVariable::operator[](const std::string& Name)
 
 KinLua::LuaVariable KinLua::LuaVariable::operator[](int)
 {
-    return KinLua::LuaVariable(Core);
+   return KinLua::LuaVariable(Core);
 }
 
 KinLua::LuaVariable::operator bool()

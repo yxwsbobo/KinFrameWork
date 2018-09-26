@@ -52,6 +52,13 @@ void Name(unsigned long long Value){return Name((long long)Value);}
 
         LuaVariable operator[](int tIndex);
 
+        LuaVariable operator[](const char* Name)
+        {
+            return (*this)[std::string(Name)];
+        }
+
+//        LuaVariable operator[](int tIndex);
+
         operator bool();
 
         operator double();
@@ -152,9 +159,10 @@ void Name(unsigned long long Value){return Name((long long)Value);}
 
     private:
         std::weak_ptr <LuaCoreType> Core;
+        // std::vector<std::shared_ptr<KinLua::LookupInfo>> ElementLists;
         int Index;
         std::string KeyName;
-
+        
     };
 
 }

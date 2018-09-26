@@ -7,7 +7,7 @@
 #define KINLUA_LUAENUMDEFINE_H
 
 #include <KinBase/BetterEnum.h>
-
+#include <string>
 struct lua_State;
 
 namespace KinLua
@@ -28,6 +28,18 @@ namespace KinLua
                 LuaTypeOver = 9,
                 Environment = 0x80
     );
+
+//    BETTER_ENUM(ElementType, int, Environment, Index, String, Stack);
+//
+//    struct LookupInfo
+//    {
+//        int Type;
+//        union
+//        {
+//            std::string Name;
+//            int Index;
+//        } Value;
+//    };
 }
 
 #endif //KINLUA_LUAENUMDEFINE_H
