@@ -1,4 +1,4 @@
 
 include(KinCommonFunction)
 
-KinAddFindModuleNoLib(spdlog)
+KinAddFindModuleNoLib(sol2)
