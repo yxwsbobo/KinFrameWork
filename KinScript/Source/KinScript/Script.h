@@ -3,11 +3,19 @@
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
 
-#ifndef KINSCIRPT_SCRIPT_H
-#define KINSCIRPT_SCRIPT_H
+#ifndef KINSCRIPT_SCRIPT_H
+#define KINSCRIPT_SCRIPT_H
+
+#include <string>
+#include "EnumDefine.h"
 
 
-namespace KinScirpt {
+namespace KinScript {
+    class Script;
+
+    extern Script CreateEngine(const std::string& FilePath);
+
+    extern Script CreateEngine(EngineType Type);
 
 /**
  * @brief
@@ -17,11 +25,19 @@ namespace KinScirpt {
  */
     class Script {
     public:
-        Script() = default;
-
         ~Script() = default;
+
+        virtual void Load(const std::string& FilePath) = 0;
+
+        virtual void RunCode(const std::string& Code) = 0;
+
+    protected:
+        Script() = default;
+        friend Script CreateEngine(const std::string& FilePath);
+        friend Script CreateEngine(EngineType Type);
+
 
     };
 
 }
-#endif //KINSCIRPT_SCRIPT_H
+#endif //KINSCRIPT_SCRIPT_H

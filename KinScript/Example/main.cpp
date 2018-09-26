@@ -7,5 +7,7 @@
 
 int main()
 {
+    auto Engine = KinScript::CreateEngine("Test.lua");
+
     return 0;
 }
