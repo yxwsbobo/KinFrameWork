@@ -1,0 +1,4 @@
+
+include(KinCommonFunction)
+
+KinAddFindModuleNoLink(boost)

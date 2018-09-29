@@ -26,5 +26,7 @@ else()
 		${KIN_FRAMEWORK_PATH}/spdlog
 		${KIN_FRAMEWORK_PATH}/sol2
 		${KIN_FRAMEWORK_PATH}/nlohmann
+		${KIN_FRAMEWORK_PATH}/websocketpp
+		${KIN_FRAMEWORK_PATH}/boost
 	)
 endif()
