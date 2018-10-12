@@ -6,8 +6,9 @@
 #ifndef SYSTEMCONTROL_KINCONTROL_H
 #define SYSTEMCONTROL_KINCONTROL_H
 
-namespace SystemControl
-{
+#include "InputStructInfo.h"
+
+namespace SystemControl {
 
 /**
  * @brief
@@ -15,11 +16,14 @@ namespace SystemControl
  * @author Kin
  * @copyright Copyright © 2018 jihuisoft. All rights reserved.
  */
-class KinControl {
-public:
-    KinControl()=default;
-    ~KinControl()=default;
-    
+class KinControl
+{
+ public:
+    KinControl() = default;
+    ~KinControl() = default;
+
+    void MouseEvent(const MouseStructInfo& Info);
+    void KeyboardEvent(const KeyboardStructInfo& Info);
 };
 
 }

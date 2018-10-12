@@ -18,7 +18,7 @@ macro(KinAddFindModule Name)
 			include_directories(${${Name}_INCLUDE_DIR})
 			link_directories(${${Name}_LIBRARIES_PATH})
 			mark_as_advanced(${Name}_INCLUDE_DIR ${Name}_LIBRARIES)
-			set(KinAllLibs ${KinAllLibs})
+			set(KinAllLibs ${KinAllLibs} ${${Name}_LIBRARIES})
 		endif (KIN_EASY_USE_LIB)
 	endif()
     
