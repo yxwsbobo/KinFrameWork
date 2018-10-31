@@ -19,6 +19,7 @@ BETTER_ENUM(InputStructType, int,
             RightButtonUp,
             MiddleButtonDown,
             MiddleButtonUp,
+            MiddleButtonWheel,
             KeyboardDown,
             KeyboardUp);
 
@@ -27,6 +28,7 @@ struct MouseStructInfo
     InputStructType Type = InputStructType::UnValid;
     int x = 0;
     int y = 0;
+    uint32_t Info =0;
     bool IsAbs = true;
 };
 

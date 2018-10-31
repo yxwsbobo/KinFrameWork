@@ -44,6 +44,11 @@ void SystemControl::KinControl::MouseEvent(const SystemControl::MouseStructInfo 
     {
         ip.mi.dwFlags = MOUSEEVENTF_MIDDLEUP;
     }
+    else if(Info.Type == +InputStructType::MiddleButtonWheel)
+    {
+        ip.mi.dwFlags = MOUSEEVENTF_WHEEL;
+        ip.mi.mouseData = Info.Info;
+    }
 
     if(Info.IsAbs)
     {
