@@ -8,5 +8,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KinCommonPath})
 include(KinCommonSetting)
 
 find_package(spdlog)
+find_package(KinBoost)
 
 add_subdirectory(Source)

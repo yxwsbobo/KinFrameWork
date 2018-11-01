@@ -11,7 +11,6 @@
 #include <unordered_map>
 #include <boost/signals2.hpp>
 #include <functional>
-#include "KinBase.h"
 namespace KinBase
 {
     struct HandlePosition

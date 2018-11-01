@@ -9,18 +9,22 @@
 namespace KinBase
 {
 
-/**
- * @brief
- * @date 2018-11-01
- * @author Kin
- * @copyright Copyright © 2018 jihuisoft. All rights reserved.
- */
-class MyTestLib {
-public:
-    MyTestLib()=default;
-    ~MyTestLib()=default;
-    
-};
+    /**
+     * @brief
+     * @date 2018-11-01
+     * @author Kin
+     * @copyright Copyright © 2018 jihuisoft. All rights reserved.
+     */
+    class MyTestLib
+    {
+    public:
+        MyTestLib();
+
+        ~MyTestLib() = default;
+
+        void LibRun();
+
+    };
 
 }
 #endif //KINBASE_MYTESTLIB_H

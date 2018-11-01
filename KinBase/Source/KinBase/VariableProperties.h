@@ -6,7 +6,7 @@
 #ifndef KINBASE_VARIABLEPROPERTIES_H
 #define KINBASE_VARIABLEPROPERTIES_H
 
-#include "EventDispatcher.h"
+#include "EventDispatcher.hpp"
 #include <any>
 #include <boost/noncopyable.hpp>
 #include <iostream>

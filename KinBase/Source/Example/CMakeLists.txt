@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(KinBase)
 
-add_executable(Example main.cpp)
+add_executable(Example main.cpp TestClass.cpp TestClass.h)
+add_library(MyTestLib MyTestLib.cpp MyTestLib.h)
 
-target_link_libraries(Example ${KinAllLibs})
+target_link_libraries(Example MyTestLib ${KinAllLibs})

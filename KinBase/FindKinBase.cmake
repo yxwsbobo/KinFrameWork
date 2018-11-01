@@ -2,5 +2,6 @@
 include(KinCommonFunction)
 
 find_package(spdlog)
+find_package(KinBoost)
 
-KinAddFindModule(KinBase)
+KinAddFindModuleNoLib(KinBase)
