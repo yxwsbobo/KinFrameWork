@@ -7,16 +7,18 @@
 
 #include <catch2/catch.hpp>
 #include <KinBase/KinException.hpp>
-
+#include <thread>
+#include <chrono>
 
 void Throw()
 {
-    Must(5==3,"not equal");
+    Must(5!=3);
 }
 
 void throw2()
 {
-    Should(3 == 2);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    Should(3 != 2);
 }
 
 TEST_CASE("Test1", "[single-file]")
@@ -36,5 +38,23 @@ TEST_CASE("Test1", "[single-file]")
 TEST_CASE("Maybe name", "[single-file]")
 {
     //    REQUIRE( Factorial(0) == 1 );
-    throw2();
+    SECTION("also run throw2")
+    {
+
+        throw2();
+    }
+
+    SECTION("tis is success")
+    {
+        Must(5 == 5);
+    }
+}
+
+TEST_CASE("Kin Test", "[Kin Tag]")
+{
+
+    SECTION("ttis is success")
+    {
+        Must(5 == 5);
+    }
 }

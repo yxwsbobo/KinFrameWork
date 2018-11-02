@@ -11,6 +11,4 @@ add_library(MyTestLib MyTestLib.cpp MyTestLib.h)
 
 add_executable(TestException TestException.cpp)
 
-target_link_libraries(Example MyTestLib ${KinAllLibs})
-
-target_link_libraries(TestException ${KinAllLibs})
+target_link_libraries(Example MyTestLib)

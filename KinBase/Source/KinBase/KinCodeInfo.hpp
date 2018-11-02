@@ -99,7 +99,7 @@ KinBase::KinCodeInfo KinBase::KinCodeInfo::Create(
         fmt::format("Condition Fail :{}", Condition));
 }
 
-const std::string &KinBase::KinCodeInfo::getFullInfo() const
+inline const std::string &KinBase::KinCodeInfo::getFullInfo() const
 {
     return FullInfo;
 }
