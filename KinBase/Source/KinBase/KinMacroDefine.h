@@ -8,6 +8,7 @@
 
 #include <string>
 
+
 #define MACRO_GET_FILE_NAME() \
 std::string(__FILE__).substr(std::string(__FILE__).find_last_of("/\\") + 1)
 

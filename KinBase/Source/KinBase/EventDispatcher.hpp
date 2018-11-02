@@ -8,6 +8,7 @@
 
 #include "EventDispatcher.h"
 
+
 int KinBase::EventDispatcher::Dispatch(std::any &event)
 {
     return Dispatch(std::type_index(event.type()), event);
@@ -21,14 +22,14 @@ int KinBase::EventDispatcher::Dispatch(std::any &&event)
 
 int KinBase::EventDispatcher::Dispatch(std::type_index typeIndex, std::any &event)
 {
-    std::shared_lock <std::shared_mutex> sharedLock{Mutex};
+    std::shared_lock<std::shared_mutex> sharedLock{Mutex};
     auto it = Dispatchers.find(typeIndex);
-    if(it != Dispatchers.end())
+    if (it != Dispatchers.end())
     {
         auto &handler = it->second;
         sharedLock.unlock();
 
-        if(!handler.empty())
+        if (!handler.empty())
         {
             return handler(event).get();
         }
@@ -42,15 +43,16 @@ int KinBase::EventDispatcher::Dispatch(std::type_index typeIndex, std::any &&eve
     return Dispatch(typeIndex, e);
 }
 
-KinBase::EventDispatcher::Connection
-KinBase::EventDispatcher::AddListener(std::type_index typeIndex,
-                                      KinBase::EventDispatcher::ListenerType listener,
-                                      KinBase::EventDispatcher::ListenerGroup group,
-                                      KinBase::EventDispatcher::ListenerPosition position)
+KinBase::EventDispatcher::Connection KinBase::EventDispatcher::AddListener(
+    std::type_index typeIndex,
+    KinBase::EventDispatcher::ListenerType listener,
+    KinBase::EventDispatcher::ListenerGroup group,
+    KinBase::EventDispatcher::ListenerPosition position
+)
 {
-    std::shared_lock <std::shared_mutex> sharedLock{Mutex};
+    std::shared_lock<std::shared_mutex> sharedLock{Mutex};
     auto it = Dispatchers.find(typeIndex);
-    if(it != Dispatchers.end())
+    if (it != Dispatchers.end())
     {
         auto &handler = it->second;
         sharedLock.unlock();
@@ -59,7 +61,7 @@ KinBase::EventDispatcher::AddListener(std::type_index typeIndex,
     else
     {
         sharedLock.unlock();
-        std::unique_lock <std::shared_mutex> uniqueLock{Mutex};
+        std::unique_lock<std::shared_mutex> uniqueLock{Mutex};
         auto &handler = Dispatchers[typeIndex];
         uniqueLock.unlock();
         return handler.connect(group, listener, position);

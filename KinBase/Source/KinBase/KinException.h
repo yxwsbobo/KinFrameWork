@@ -9,23 +9,14 @@
 #include <string>
 #include <exception>
 #include <functional>
+#include <ostream>
 
 #include "KinCodeInfo.h"
-#include "SingleObject.h"
+
 
 namespace KinBase
 {
     class KinException;
-
-    namespace ExceptionInfo
-    {
-        class ExceptionHandlerWarpper
-        {
-        public:
-            std::function <int(KinBase::KinException &)> Handler = [](KinBase::KinException &){return 0;};
-        };
-        static auto& ExceptionHandler = KinBase::SingleObject<ExceptionHandlerWarpper>::Value.Handler;
-    }
 
     /**
      * @brief
@@ -33,32 +24,34 @@ namespace KinBase
      * @author Kin
      * @copyright Copyright © 2018 jihuisoft. All rights reserved.
      */
-    class KinException : public std::exception, public KinCodeInfo
+    class KinException
+        : public std::exception, public KinCodeInfo
     {
     public:
         using KinCodeInfo::KinCodeInfo;
-        using HandlerType = std::function <int(KinBase::KinException &)>;
+        using HandlerType = std::function<int(KinBase::KinException &)>;
 
-        explicit KinException(const KinCodeInfo& Info);
+        explicit KinException(const KinCodeInfo &Info);
 
         const char *what() const noexcept override;
 
-        static void SetExceptionHandler(const HandlerType& handler);
+        static HandlerType &GetExceptionHandler();
 
-        static HandlerType GetExceptionHandler();
+        static void SetExceptionHandler(const HandlerType &handler);
 
-        template <typename eType>
-        static int Throw(const KinBase::KinCodeInfo&) noexcept(false);
-
+        template<typename eType>
+        static int Throw(const KinBase::KinCodeInfo &) noexcept(false);
     };
 
-    class MustException : public KinBase::KinException
+    class MustException
+        : public KinBase::KinException
     {
     public:
         using KinException::KinException;
     };
 
-    class ShouldException : public KinBase::KinException
+    class ShouldException
+        : public KinBase::KinException
     {
     public:
         using KinException::KinException;
@@ -73,4 +66,6 @@ MakeCodeInfo(#Condition,##__VA_ARGS__))
 MakeCodeInfo(#Condition,##__VA_ARGS__))
 
 }
+
+
 #endif //KINBASE_KINEXCEPTION_H

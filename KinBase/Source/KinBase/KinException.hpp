@@ -9,42 +9,44 @@
 #include "KinException.h"
 #include "KinCodeInfo.hpp"
 
+
 inline KinBase::KinException::KinException(const KinBase::KinCodeInfo &Info)
-    :KinCodeInfo{Info}
+    : KinCodeInfo{Info}
 {
 }
 
 inline const char *KinBase::KinException::what() const noexcept
 {
-    return getMessage().c_str();
+    return getFullInfo().c_str();
 }
 
-inline KinBase::KinException::HandlerType KinBase::KinException::GetExceptionHandler()
+inline KinBase::KinException::HandlerType &KinBase::KinException::GetExceptionHandler()
 {
-    return ExceptionInfo::ExceptionHandler;
+    static HandlerType Handler = [](KinBase::KinException &) { return 0; };
+    return Handler;
 }
 
 inline void KinBase::KinException::SetExceptionHandler(const KinBase::KinException::HandlerType &handler)
 {
-    ExceptionInfo::ExceptionHandler = handler;
+    GetExceptionHandler() = handler;
 }
 
 template<typename eType>
-int KinBase::KinException::Throw(const KinBase::KinCodeInfo & Info) noexcept(false)
+int KinBase::KinException::Throw(const KinBase::KinCodeInfo &Info) noexcept(false)
 {
     eType ExceptionObj{Info};
 
-    if(ExceptionInfo::ExceptionHandler)
+    if (GetExceptionHandler())
     {
         try
         {
-            auto Result = ExceptionInfo::ExceptionHandler(ExceptionObj);
-            if(Result != 0)
+            auto Result = GetExceptionHandler()(ExceptionObj);
+            if (Result != 0)
             {
                 return Result;
             }
         }
-        catch(...)
+        catch (...)
         {
 
         }

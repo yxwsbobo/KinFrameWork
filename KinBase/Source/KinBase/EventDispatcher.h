@@ -11,6 +11,8 @@
 #include <unordered_map>
 #include <boost/signals2.hpp>
 #include <functional>
+
+
 namespace KinBase
 {
     struct HandlePosition
@@ -57,9 +59,9 @@ namespace KinBase
      */
     class EventDispatcher
     {
-        using HandlerType = boost::signals2::signal <int(std::any &)>;
+        using HandlerType = boost::signals2::signal<int(std::any &)>;
         std::shared_mutex Mutex;
-        std::unordered_map <std::type_index, HandlerType> Dispatchers;
+        std::unordered_map<std::type_index, HandlerType> Dispatchers;
     public:
         ///@brief Control Connection state
         using Connection = boost::signals2::connection;
@@ -69,7 +71,7 @@ namespace KinBase
         using ListenerGroup = HandlerType::group_type;
 
         ///@return 0 is go on,other code will stop dispatching Todo this
-        using ListenerType = std::function <int(std::any &)>;
+        using ListenerType = std::function<int(std::any &)>;
 
         /**
          * @brief Send event to object,it will dispatch event to Handler.\n
@@ -95,24 +97,24 @@ namespace KinBase
         ///Todo dispatch with pointer
         int Dispatch(std::any &&event);
 
-        template <typename EventType>
+        template<typename EventType>
         inline int Dispatch(EventType &&event)
         {
-            std::any e = const_cast<std::decay_t <EventType> *>(&event);
-            return Dispatch(std::type_index(typeid(std::decay_t <EventType>)), e);
+            std::any e = const_cast<std::decay_t<EventType> *>(&event);
+            return Dispatch(std::type_index(typeid(std::decay_t<EventType>)), e);
         }
 
-        template <typename EventType>
-        static inline std::decay_t<EventType>* GetEventPointer(std::any &event)
+        template<typename EventType>
+        static inline std::decay_t<EventType> *GetEventPointer(std::any &event)
         {
             auto Result = std::any_cast<std::decay_t<EventType> *>(&event);
-            if(Result)
+            if (Result)
             {
                 return *Result;
             }
 
             auto Result2 = std::any_cast<std::decay_t<EventType>>(&event);
-            if(Result2)
+            if (Result2)
             {
                 return Result2;
             }
@@ -138,16 +140,19 @@ namespace KinBase
          * @brief not suggest use this too.
          * @see EventDispatcher::Dispatch
          */
-        Connection AddListener(std::type_index typeIndex,
-                               ListenerType listener,
-                               ListenerGroup group = 0,
-                               ListenerPosition position = ListenerPosition::at_back);
+        Connection AddListener(
+            std::type_index typeIndex,
+            ListenerType listener,
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        );
 
-
-        template <typename EventType>
-        inline Connection AddListener(std::function <int(EventType)> listener,
-                               ListenerGroup group = 0,
-                               ListenerPosition position = ListenerPosition::at_back)
+        template<typename EventType>
+        inline Connection AddListener(
+            std::function<int(EventType)> listener,
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
             auto lambda = [listener](std::any &event) {
                 auto e = GetEventPointer<EventType>(event);
@@ -156,14 +161,16 @@ namespace KinBase
             return AddListener(std::type_index(typeid(std::decay_t<EventType>)), lambda, group, position);
         }
 
-        template <typename EventType, typename HandlerType>
-        inline Connection AddListener(std::weak_ptr <HandlerType> handler,
-                                                int (HandlerType::*listener)(EventType),
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
+        template<typename EventType, typename HandlerType>
+        inline Connection AddListener(
+            std::weak_ptr<HandlerType> handler,
+            int (HandlerType::*listener)(EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
-            auto lambda = [handler,listener](std::any &event) {
-                if(auto hd = handler.lock())
+            auto lambda = [handler, listener](std::any &event) {
+                if (auto hd = handler.lock())
                 {
                     auto e = GetEventPointer<EventType>(event);
                     return ((*hd).*listener)(*e);
@@ -175,13 +182,15 @@ namespace KinBase
         };
 
         template<typename EventType, typename HandlerType>
-        inline Connection AddListener(std::weak_ptr<HandlerType> handler,
-                                      void (HandlerType::*listener)(EventType),
-                                      ListenerGroup group = 0,
-                                      ListenerPosition position = ListenerPosition::at_back)
+        inline Connection AddListener(
+            std::weak_ptr<HandlerType> handler,
+            void (HandlerType::*listener)(EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
             auto lambda = [handler, listener](std::any &event) {
-                if(auto hd = handler.lock())
+                if (auto hd = handler.lock())
                 {
                     auto e = GetEventPointer<EventType>(event);
                     ((*hd).*listener)(*e);
@@ -193,30 +202,34 @@ namespace KinBase
             return AddListener(std::type_index(typeid(std::decay_t<EventType>)), lambda, group, position);
         };
 
-        template <typename EventType, typename HandlerType>
-        inline Connection AddListener(std::shared_ptr <HandlerType> handler,
-                                      int (HandlerType::*listener)(EventType),
-                                      ListenerGroup group = 0,
-                                      ListenerPosition position = ListenerPosition::at_back)
-        {
-            std::weak_ptr <HandlerType> weakPtr = handler;
-            return AddListener(weakPtr, listener, group, position);
-        }
-
         template<typename EventType, typename HandlerType>
-        inline Connection AddListener(std::shared_ptr<HandlerType> handler,
-                                      void (HandlerType::*listener)(EventType),
-                                      ListenerGroup group = 0,
-                                      ListenerPosition position = ListenerPosition::at_back)
+        inline Connection AddListener(
+            std::shared_ptr<HandlerType> handler,
+            int (HandlerType::*listener)(EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
             std::weak_ptr<HandlerType> weakPtr = handler;
             return AddListener(weakPtr, listener, group, position);
         }
 
-        template <typename EventType>
-        inline Connection AddListener(int (*listener)( EventType),
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
+        template<typename EventType, typename HandlerType>
+        inline Connection AddListener(
+            std::shared_ptr<HandlerType> handler,
+            void (HandlerType::*listener)(EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
+        {
+            std::weak_ptr<HandlerType> weakPtr = handler;
+            return AddListener(weakPtr, listener, group, position);
+        }
+
+        template<typename EventType>
+        inline Connection AddListener(
+            int (*listener)(EventType), ListenerGroup group = 0, ListenerPosition position = ListenerPosition::at_back
+        )
         {
             auto lambda = [listener](std::any &event) {
                 auto e = GetEventPointer<EventType>(event);
@@ -226,9 +239,9 @@ namespace KinBase
         }
 
         template<typename EventType>
-        inline Connection AddListener(void (*listener)(EventType),
-                                      ListenerGroup group = 0,
-                                      ListenerPosition position = ListenerPosition::at_back)
+        inline Connection AddListener(
+            void (*listener)(EventType), ListenerGroup group = 0, ListenerPosition position = ListenerPosition::at_back
+        )
         {
             auto lambda = [listener](std::any &event) {
                 auto e = GetEventPointer<EventType>(event);
@@ -266,7 +279,7 @@ namespace KinBase
      *
      * @copydetails EventDispatcher
      */
-    template <typename DestType>
+    template<typename DestType>
     class EventDispatcherBase
     {
         DestType *Dest;
@@ -283,105 +296,119 @@ namespace KinBase
         using ListenerPosition = EventDispatcher::ListenerPosition;
 
         explicit EventDispatcherBase(DestType *Target)
-                : Dest{Target}
+            : Dest{Target}
         {
         }
 
-        template <typename... Args>
-        inline int DispatchEvent(Args&& ...args)
+        template<typename... Args>
+        inline int DispatchEvent(Args &&...args)
         {
             return Dispatcher.Dispatch(std::forward<Args>(args) ...);
         }
 
-        template <typename... Args>
-        inline Connection RegisterEventListener(Args&& ...args)
+        template<typename... Args>
+        inline Connection RegisterEventListener(Args &&...args)
         {
             return Dispatcher.AddListener(std::forward<Args>(args) ...);
         }
 
         ///@brief General function base on std::function
-        template <typename TargetType, typename EventType>
-        inline Connection RegisterEventListener(std::function <int(TargetType *, EventType)> listener,
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
+        template<typename TargetType, typename EventType>
+        inline Connection RegisterEventListener(
+            std::function<int(TargetType *, EventType)> listener,
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
             auto target = dynamic_cast<TargetType *>(Dest);
             Must(target);
-            auto lambda = [target,listener](std::any &event) {
+            auto lambda = [target, listener](std::any &event) {
                 auto e = EventDispatcher::GetEventPointer<EventType>(event);
-                return listener(target,*e);
+                return listener(target, *e);
             };
-            return Dispatcher.AddListener(std::type_index(typeid(std::decay_t<EventType>)),
-                                          lambda, group, position);
+            return Dispatcher.AddListener(
+                std::type_index(typeid(std::decay_t<EventType>)), lambda, group, position
+            );
         }
 
         template<typename EventType>
-        inline Connection RegisterEventListener(std::function<int(EventType)> listener,
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
+        inline Connection RegisterEventListener(
+            std::function<int(EventType)> listener,
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
             auto lambda = [listener](std::any &event) {
                 auto e = EventDispatcher::GetEventPointer<EventType>(event);
                 return listener(*e);
             };
-            return Dispatcher.AddListener(std::type_index(typeid(std::decay_t<EventType>)),
-                                          lambda, group, position);
+            return Dispatcher.AddListener(
+                std::type_index(typeid(std::decay_t<EventType>)), lambda, group, position
+            );
         }
 
-
-        template <typename TargetType, typename EventType, typename HandlerType>
-        inline Connection RegisterEventListener(std::shared_ptr <HandlerType> handler,
-                                                int (HandlerType::*listener)(TargetType *, EventType),
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
-        {
-            std::weak_ptr <HandlerType> weakPtr = handler;
-            return RegisterEventListener(weakPtr, listener, group, position);
-        };
-
         template<typename TargetType, typename EventType, typename HandlerType>
-        inline Connection RegisterEventListener(std::shared_ptr<HandlerType> handler,
-                                                void (HandlerType::*listener)(TargetType *, EventType),
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
+        inline Connection RegisterEventListener(
+            std::shared_ptr<HandlerType> handler,
+            int (HandlerType::*listener)(TargetType *, EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
             std::weak_ptr<HandlerType> weakPtr = handler;
             return RegisterEventListener(weakPtr, listener, group, position);
         };
 
-        template <typename TargetType, typename EventType, typename HandlerType>
-        inline Connection RegisterEventListener(std::weak_ptr <HandlerType> handler,
-                                                int (HandlerType::*listener)(TargetType *, EventType),
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
+        template<typename TargetType, typename EventType, typename HandlerType>
+        inline Connection RegisterEventListener(
+            std::shared_ptr<HandlerType> handler,
+            void (HandlerType::*listener)(TargetType *, EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
-            auto target = dynamic_cast<TargetType *>(Dest);
-            Must(target);
-
-            auto lambda = [target,handler, listener](std::any &event) {
-                if(auto hd = handler.lock())
-                {
-                    auto e = EventDispatcher::GetEventPointer<EventType>(event);
-                    return ((*hd).*listener)(target,*e);
-                }
-                //Todo Erase this listener
-                return 0;
-            };
-            return Dispatcher.AddListener(std::type_index(typeid(std::decay_t<EventType>)),
-                                          lambda, group, position);
+            std::weak_ptr<HandlerType> weakPtr = handler;
+            return RegisterEventListener(weakPtr, listener, group, position);
         };
 
         template<typename TargetType, typename EventType, typename HandlerType>
-        inline Connection RegisterEventListener(std::weak_ptr<HandlerType> handler,
-                                                void (HandlerType::*listener)(TargetType *, EventType),
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
+        inline Connection RegisterEventListener(
+            std::weak_ptr<HandlerType> handler,
+            int (HandlerType::*listener)(TargetType *, EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
             auto target = dynamic_cast<TargetType *>(Dest);
             Must(target);
 
             auto lambda = [target, handler, listener](std::any &event) {
-                if(auto hd = handler.lock())
+                if (auto hd = handler.lock())
+                {
+                    auto e = EventDispatcher::GetEventPointer<EventType>(event);
+                    return ((*hd).*listener)(target, *e);
+                }
+                //Todo Erase this listener
+                return 0;
+            };
+            return Dispatcher.AddListener(
+                std::type_index(typeid(std::decay_t<EventType>)), lambda, group, position
+            );
+        };
+
+        template<typename TargetType, typename EventType, typename HandlerType>
+        inline Connection RegisterEventListener(
+            std::weak_ptr<HandlerType> handler,
+            void (HandlerType::*listener)(TargetType *, EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
+        {
+            auto target = dynamic_cast<TargetType *>(Dest);
+            Must(target);
+
+            auto lambda = [target, handler, listener](std::any &event) {
+                if (auto hd = handler.lock())
                 {
                     auto e = EventDispatcher::GetEventPointer<EventType>(event);
                     ((*hd).*listener)(target, *e);
@@ -389,30 +416,36 @@ namespace KinBase
                 //Todo Erase this listener
                 return 0;
             };
-            return Dispatcher.AddListener(std::type_index(typeid(std::decay_t<EventType>)),
-                                          lambda, group, position);
+            return Dispatcher.AddListener(
+                std::type_index(typeid(std::decay_t<EventType>)), lambda, group, position
+            );
         };
 
-        template <typename TargetType, typename EventType>
-        inline Connection RegisterEventListener(int (*listener)(TargetType *, EventType),
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
+        template<typename TargetType, typename EventType>
+        inline Connection RegisterEventListener(
+            int (*listener)(TargetType *, EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
             auto target = dynamic_cast<TargetType *>(Dest);
             Must(target);
 
-            auto lambda = [target,listener](std::any &event) {
+            auto lambda = [target, listener](std::any &event) {
                 auto e = EventDispatcher::GetEventPointer<EventType>(event);
-                return (*listener)(target,*e);
+                return (*listener)(target, *e);
             };
-            return Dispatcher.AddListener(std::type_index(typeid(std::decay_t<EventType>)),
-                                          lambda, group, position);
+            return Dispatcher.AddListener(
+                std::type_index(typeid(std::decay_t<EventType>)), lambda, group, position
+            );
         };
 
         template<typename TargetType, typename EventType>
-        inline Connection RegisterEventListener(void (*listener)(TargetType *, EventType),
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
+        inline Connection RegisterEventListener(
+            void (*listener)(TargetType *, EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
             auto target = dynamic_cast<TargetType *>(Dest);
             Must(target);
@@ -422,14 +455,17 @@ namespace KinBase
                 (*listener)(target, *e);
                 return 0;
             };
-            return Dispatcher.AddListener(std::type_index(typeid(std::decay_t<EventType>)),
-                                          lambda, group, position);
+            return Dispatcher.AddListener(
+                std::type_index(typeid(std::decay_t<EventType>)), lambda, group, position
+            );
         };
 
-        template <typename EventType, typename SelfType>
-        inline Connection RegisterEventListener(int (SelfType::*listener)(EventType),
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
+        template<typename EventType, typename SelfType>
+        inline Connection RegisterEventListener(
+            int (SelfType::*listener)(EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
             auto self = dynamic_cast<SelfType *>(Dest);
             Must(self);
@@ -438,14 +474,17 @@ namespace KinBase
                 auto e = EventDispatcher::GetEventPointer<EventType>(event);
                 return (self->*listener)(*e);
             };
-            return Dispatcher.AddListener(std::type_index(typeid(std::decay_t<EventType>)),
-                                          lambda, group, position);
+            return Dispatcher.AddListener(
+                std::type_index(typeid(std::decay_t<EventType>)), lambda, group, position
+            );
         }
 
         template<typename EventType, typename SelfType>
-        inline Connection RegisterEventListener(void (SelfType::*listener)(EventType),
-                                                ListenerGroup group = 0,
-                                                ListenerPosition position = ListenerPosition::at_back)
+        inline Connection RegisterEventListener(
+            void (SelfType::*listener)(EventType),
+            ListenerGroup group = 0,
+            ListenerPosition position = ListenerPosition::at_back
+        )
         {
             auto self = dynamic_cast<SelfType *>(Dest);
             Must(self);
@@ -455,8 +494,9 @@ namespace KinBase
                 (self->*listener)(*e);
                 return 0;
             };
-            return Dispatcher.AddListener(std::type_index(typeid(std::decay_t<EventType>)),
-                                          lambda, group, position);
+            return Dispatcher.AddListener(
+                std::type_index(typeid(std::decay_t<EventType>)), lambda, group, position
+            );
         }
 
     };

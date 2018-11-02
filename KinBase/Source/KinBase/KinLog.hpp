@@ -8,29 +8,34 @@
 
 #include "KinLog.h"
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include <iostream>
+#include <fmt/ostr.h>
 
-inline KinBase::KinLogClass::KinLogClass()
+
+inline KinBase::KinLog::KinDefaultLoggerWarpper::KinDefaultLoggerWarpper()
 {
-
     Logger = spdlog::stdout_color_mt("log");
-    spdlog::set_pattern("%C-%m-%d %T|%t|%n [%L] %v");
+    spdlog::set_pattern("%Y-%m-%d %T|%t|%n [%L] %v");
     spdlog::set_level(spdlog::level::trace);
     spdlog::flush_on(spdlog::level::trace);
 
-    if(std::cout)
-        std::cout<<"Init KinLog ok"<<std::endl;
-    else
-    {
-        std::cout<<"not init"<<std::endl;
-    }
+    Logger->set_pattern("%^%Y-%m-%d %T|%t|%n [%L] %v%$");
+}
 
+inline std::shared_ptr<spdlog::logger> &KinBase::KinLog::GetDefaultLogger()
+{
+    static KinDefaultLoggerWarpper DefaultLogger;
+    return DefaultLogger.Logger;
+}
+
+inline void KinBase::KinLog::SetDefaultLogger(const std::shared_ptr<spdlog::logger> &Logger)
+{
+    GetDefaultLogger() = Logger;
 }
 
 template<typename... ArgTypes>
 std::shared_ptr<spdlog::logger> KinBase::KinLog::CreateLogger(ArgTypes &&... args)
 {
-    return spdlog::stdout_color_mt(std::forward <ArgTypes>(args)...);
+    return spdlog::stdout_color_mt(std::forward<ArgTypes>(args)...);
 }
 
 template<typename T1, typename T2, typename T3, typename T4, typename... ArgTypes>
@@ -41,8 +46,8 @@ void KinBase::KinLog::Log(T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&Lin
         std::forward<T2>(FileName),
         std::forward<T3>(FunctionName),
         std::forward<T4>(LineNumber),
-        DefaultLogger,
-        std::forward <ArgTypes>(args)...
+        GetDefaultLogger(),
+        std::forward<ArgTypes>(args)...
     );
 }
 
@@ -68,8 +73,8 @@ void KinBase::KinLog::Log(
     ArgTypes &&... args
 )
 {
-    lg->log(Level,"{} {}({}): {}", FunctionName, FileName, LineNumber,
-            fmt::format(std::forward <ArgTypes>(args)...));
+    lg->log(
+        Level, "{}():{}({}): {}", FunctionName, FileName, LineNumber, fmt::format(std::forward<ArgTypes>(args)...));
 }
 
 template<typename T1, typename T2, typename T3, typename T4>

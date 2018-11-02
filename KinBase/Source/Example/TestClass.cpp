@@ -17,18 +17,18 @@ void KinBase::TestClass::Run()
 
     auto lg = KinBase::KinLog::CreateLogger("at");
 
-    kInfo(lg,"Start Dest Log");
-    kWarn(lg,"number is {}", 15);
+    kInfo(lg, "Start Dest Log");
+    kWarn(lg, "number is {}", 15);
     kError(lg);
 
     try
     {
         Must(5 != 2, "must error");
         Should(3 != 2);
-        Must(5 == 3,"must error");
-        Should(5 == 2,"should error not equal");
+        Must(5 == 3, "must error");
+        Should(5 == 2, "should error not equal");
     }
-    catch(const KinBase::KinException &e)
+    catch (const KinBase::KinException &e)
     {
         std::cout << e.what() << std::endl;
         std::cout << e.getCondition() << std::endl;

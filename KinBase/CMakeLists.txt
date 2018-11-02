@@ -9,5 +9,6 @@ include(KinCommonSetting)
 
 find_package(spdlog)
 find_package(KinBoost)
+find_package(catch2)
 
 add_subdirectory(Source)

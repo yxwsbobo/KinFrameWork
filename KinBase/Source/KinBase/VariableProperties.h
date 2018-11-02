@@ -11,17 +11,19 @@
 #include <boost/noncopyable.hpp>
 #include <iostream>
 
+
 namespace KinBase
 {
     template<typename DestType>
-    class PropertiesMap : public boost::noncopyable
+    class PropertiesMap
+        : public boost::noncopyable
     {
         DestType *Dest;
         std::shared_mutex Mutex;
         std::unordered_map<std::type_index, EventDispatcherBase<DestType>> Dispatchers;
     public:
         explicit PropertiesMap(DestType *dest)
-                : Dest{dest}
+            : Dest{dest}
         {
         }
 
@@ -29,7 +31,7 @@ namespace KinBase
         {
             std::shared_lock<std::shared_mutex> sharedLock{Mutex};
             auto it = Dispatchers.find(typeIndex);
-            if(it != Dispatchers.end())
+            if (it != Dispatchers.end())
             {
                 return it->second;
             }
@@ -67,7 +69,7 @@ namespace KinBase
         using ListenerPosition = EventDispatcher::ListenerPosition;
 
         explicit VariableProperties(DestType *dest)
-                : SetterMap{dest}, GetterMap{dest}, Dest{dest}
+            : SetterMap{dest}, GetterMap{dest}, Dest{dest}
         {
         }
 
@@ -170,7 +172,6 @@ namespace KinBase
             (*property)->PropertyAttach(target);
         }
 
-
         template<typename PropertyType, typename TargetType>
         static void CallPropertyAttach(std::false_type &, PropertyType, TargetType)
         {
@@ -181,12 +182,10 @@ namespace KinBase
         {
         private:
             template<typename U>
-            static auto check(int)->
-            decltype(std::declval<U>().PropertyAttach(nullptr), std::true_type());
+            static auto check(int) -> decltype(std::declval<U>().PropertyAttach(nullptr), std::true_type());
 
             template<typename U>
-            static auto check(int)->
-            decltype(std::declval<U>()->PropertyAttach(nullptr), double(1.0));
+            static auto check(int) -> decltype(std::declval<U>()->PropertyAttach(nullptr), double(1.0));
 
             template<typename U>
             static std::false_type check(...);

@@ -8,6 +8,8 @@
 
 #include "KinCodeInfo.h"
 #include <fmt/fmt.h>
+#include <fmt/ostr.h>
+
 
 inline KinBase::KinCodeInfo::KinCodeInfo(
     const std::string &Message,
@@ -17,7 +19,9 @@ inline KinBase::KinCodeInfo::KinCodeInfo(
     const std::string &LineNumber
 )
     : Message(Message), Condition(Condition), FileName(FileName), FunctionName(FunctionName), LineNumber(LineNumber)
-{ }
+{
+    FullInfo = fmt::format("{}(){}:{} [{}]: {}",FunctionName,FileName,LineNumber,Condition,Message);
+}
 
 inline const std::string &KinBase::KinCodeInfo::getMessage() const
 {
@@ -69,36 +73,42 @@ inline void KinBase::KinCodeInfo::setLineNumber(const std::string &LineNumber)
     KinCodeInfo::LineNumber = LineNumber;
 }
 
-
 template<typename T1, typename T2, typename T3, typename T4, typename... ArgTypes>
 KinBase::KinCodeInfo KinBase::KinCodeInfo::Create(
-    T1 &&Condition,
-    T2 &&FileName,
-    T3 &&FunctionName,
-    T4 &&LineNumber,
-    ArgTypes &&... args
+    T1 &&Condition, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber, ArgTypes &&... args
 ) noexcept(false)
 {
     return KinBase::KinCodeInfo(
-        fmt::format(std::forward <ArgTypes>(args)...),
+        fmt::format(std::forward<ArgTypes>(args)...),
         fmt::format("{}", std::forward<T1>(Condition)),
         fmt::format("{}", std::forward<T2>(FileName)),
         fmt::format("{}", std::forward<T3>(FunctionName)),
-        fmt::format("{}", std::forward<T4>(LineNumber))
-    );
+        fmt::format("{}", std::forward<T4>(LineNumber)));
 }
 
 template<typename T1, typename T2, typename T3, typename T4>
 KinBase::KinCodeInfo KinBase::KinCodeInfo::Create(
-    T1 &&Condition, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber) noexcept(false)
+    T1 &&Condition, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber
+) noexcept(false)
 {
     return Create(
-        std::forward <T1>(Condition),
-        std::forward <T2>(FileName),
-        std::forward <T3>(FunctionName),
-        std::forward <T4>(LineNumber),
-        fmt::format("Condition Fail :{}", Condition)
-    );
+        std::forward<T1>(Condition),
+        std::forward<T2>(FileName),
+        std::forward<T3>(FunctionName),
+        std::forward<T4>(LineNumber),
+        fmt::format("Condition Fail :{}", Condition));
 }
+
+const std::string &KinBase::KinCodeInfo::getFullInfo() const
+{
+    return FullInfo;
+}
+
+inline std::ostream &operator<<(std::ostream &os, const KinBase::KinCodeInfo &CodeInfo)
+{
+    os << CodeInfo.getFullInfo();
+    return os;
+}
+
 
 #endif //KINBASE_KINCODEINFO_HPP

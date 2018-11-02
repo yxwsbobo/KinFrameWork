@@ -11,7 +11,9 @@
 #include <string>
 #include "KinMacroDefine.h"
 
-namespace KinBase {
+
+namespace KinBase
+{
 
     /**
      * @brief
@@ -22,6 +24,7 @@ namespace KinBase {
     class KinCodeInfo
     {
     public:
+
         KinCodeInfo(
             const std::string &Message,
             const std::string &Condition,
@@ -33,6 +36,7 @@ namespace KinBase {
         virtual ~KinCodeInfo() = default;
 
     public:
+
         const std::string &getMessage() const;
 
         void setMessage(const std::string &Message);
@@ -53,14 +57,14 @@ namespace KinBase {
 
         void setLineNumber(const std::string &LineNumber);
 
-        template <typename T1, typename T2, typename T3, typename T4, typename... ArgTypes>
+        const std::string &getFullInfo() const;
+
+        template<typename T1, typename T2, typename T3, typename T4, typename... ArgTypes>
         static KinCodeInfo
         Create(T1 &&Condition, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber, ArgTypes &&... args) noexcept(false);
 
-        template <typename T1, typename T2, typename T3, typename T4>
-        static KinCodeInfo
-        Create(T1 &&Condition, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber) noexcept(false);
-
+        template<typename T1, typename T2, typename T3, typename T4>
+        static KinCodeInfo Create(T1 &&Condition, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber) noexcept(false);
 
     private:
         std::string Message;
@@ -68,6 +72,7 @@ namespace KinBase {
         std::string FileName;
         std::string FunctionName;
         std::string LineNumber;
+        std::string FullInfo;
     };
 
 #define MakeCodeInfo(Condition, ...)                                     \
