@@ -64,7 +64,7 @@ namespace KinBase
 #define __Kin_LogHelp(Level, ...)                                              \
 KinBase::KinLog::Log(                                          \
         Level,                                                            \
-        MACRO_GET_FILE_NAME(),                                           \
+        __FILE__,                                           \
         __FUNCTION__,                                                    \
         __LINE__,                                                        \
         ##__VA_ARGS__                                                    \

@@ -12,29 +12,33 @@
 
 inline KinBase::KinException::KinException(const KinBase::KinCodeInfo &Info)
     : KinCodeInfo{Info}
-{
-}
+{ }
 
 inline const char *KinBase::KinException::what() const noexcept
 {
     return getFullInfo().c_str();
 }
 
-inline KinBase::KinException::HandlerType &KinBase::KinException::GetExceptionHandler()
+inline KinBase::KinException::HandlerListsType &KinBase::KinException::GetExceptionHandlerLists()
 {
-    static HandlerType Handler = [](KinBase::KinException &) { return 0; };
-    return Handler;
+    static HandlerListsType Lists{};
+    return Lists;
 }
 
-inline void KinBase::KinException::SetExceptionHandler(const KinBase::KinException::HandlerType &handler)
+inline void KinBase::KinException::AddExceptionHandler(
+    const std::string_view &tag,
+    const KinBase::KinException::HandlerType &handler
+)
 {
-    GetExceptionHandler() = handler;
+    GetExceptionHandlerLists()[tag] = handler;
 }
 
 template<typename eType>
 int KinBase::KinException::Throw(const KinBase::KinCodeInfo &Info) noexcept(false)
 {
     eType ExceptionObj{Info};
+
+
 
     if (GetExceptionHandler())
     {
@@ -54,5 +58,6 @@ int KinBase::KinException::Throw(const KinBase::KinCodeInfo &Info) noexcept(fals
 
     throw ExceptionObj;
 }
+
 
 #endif //KINBASE_KINEXCEPTION_HPP

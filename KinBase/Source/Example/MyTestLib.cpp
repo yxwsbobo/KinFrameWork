@@ -44,7 +44,7 @@ KinBase::MyTestLib::MyTestLib()
     KinBase::KinException::SetExceptionHandler([Handler](KinBase::KinException& e){
         kInfo("MyLib Exception :{}", e.getCondition());
         int result =0;
-        if(std::stoi(e.getLineNumber()) == 27)
+        if(e.getLineNumber() == 27)
         {
             result = Handler(e);
             return 1;

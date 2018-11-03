@@ -12,7 +12,7 @@
 
 void Throw()
 {
-    Must(5!=3);
+    REQUIRE(5==3);
 }
 
 void throw2()

@@ -7,20 +7,28 @@
 #define KINBASE_KINCODEINFO_HPP
 
 #include "KinCodeInfo.h"
+#include "KinFileSystem.hpp"
+
 #include <fmt/fmt.h>
 #include <fmt/ostr.h>
 
 
 inline KinBase::KinCodeInfo::KinCodeInfo(
     const std::string &Message,
-    const std::string &Condition,
-    const std::string &FileName,
-    const std::string &FunctionName,
-    const std::string &LineNumber
+    const std::string_view &Condition,
+    const std::string_view &FileName,
+    const std::string_view &FunctionName,
+    int LineNumber
 )
     : Message(Message), Condition(Condition), FileName(FileName), FunctionName(FunctionName), LineNumber(LineNumber)
+{ }
+
+inline const std::string &KinBase::KinCodeInfo::getFullInfo() const
 {
-    FullInfo = fmt::format("{}(){}:{} [{}]: {}",FunctionName,FileName,LineNumber,Condition,Message);
+    FullInfo = fmt::format(
+        "{}(){}:{} [{}]: {}", getFunctionName(), getFileName(), getLineNumber(), getCondition(), getMessage());
+
+    return FullInfo;
 }
 
 inline const std::string &KinBase::KinCodeInfo::getMessage() const
@@ -33,42 +41,47 @@ inline void KinBase::KinCodeInfo::setMessage(const std::string &Message)
     KinCodeInfo::Message = Message;
 }
 
-inline const std::string &KinBase::KinCodeInfo::getCondition() const
+inline const std::string_view &KinBase::KinCodeInfo::getCondition() const
 {
     return Condition;
 }
 
-inline void KinBase::KinCodeInfo::setCondition(const std::string &Condition)
+inline void KinBase::KinCodeInfo::setCondition(const std::string_view &Condition)
 {
     KinCodeInfo::Condition = Condition;
 }
 
-inline const std::string &KinBase::KinCodeInfo::getFileName() const
+inline const std::string_view KinBase::KinCodeInfo::getFileName() const
+{
+    return KinFileSystem::GetFileNameFromFullPath(FileName);
+}
+
+inline const std::string_view &KinBase::KinCodeInfo::getFullFileName() const
 {
     return FileName;
 }
 
-inline void KinBase::KinCodeInfo::setFileName(const std::string &FileName)
+inline void KinBase::KinCodeInfo::setFileName(const std::string_view &FileName)
 {
     KinCodeInfo::FileName = FileName;
 }
 
-inline const std::string &KinBase::KinCodeInfo::getFunctionName() const
+inline const std::string_view &KinBase::KinCodeInfo::getFunctionName() const
 {
     return FunctionName;
 }
 
-inline void KinBase::KinCodeInfo::setFunctionName(const std::string &FunctionName)
+inline void KinBase::KinCodeInfo::setFunctionName(const std::string_view &FunctionName)
 {
     KinCodeInfo::FunctionName = FunctionName;
 }
 
-inline const std::string &KinBase::KinCodeInfo::getLineNumber() const
+inline int KinBase::KinCodeInfo::getLineNumber() const
 {
     return LineNumber;
 }
 
-inline void KinBase::KinCodeInfo::setLineNumber(const std::string &LineNumber)
+inline void KinBase::KinCodeInfo::setLineNumber(int LineNumber)
 {
     KinCodeInfo::LineNumber = LineNumber;
 }
@@ -80,10 +93,10 @@ KinBase::KinCodeInfo KinBase::KinCodeInfo::Create(
 {
     return KinBase::KinCodeInfo(
         fmt::format(std::forward<ArgTypes>(args)...),
-        fmt::format("{}", std::forward<T1>(Condition)),
-        fmt::format("{}", std::forward<T2>(FileName)),
-        fmt::format("{}", std::forward<T3>(FunctionName)),
-        fmt::format("{}", std::forward<T4>(LineNumber)));
+        std::forward<T1>(Condition),
+        std::forward<T2>(FileName),
+        std::forward<T3>(FunctionName),
+        std::forward<T4>(LineNumber));
 }
 
 template<typename T1, typename T2, typename T3, typename T4>
@@ -97,11 +110,6 @@ KinBase::KinCodeInfo KinBase::KinCodeInfo::Create(
         std::forward<T3>(FunctionName),
         std::forward<T4>(LineNumber),
         fmt::format("Condition Fail :{}", Condition));
-}
-
-inline const std::string &KinBase::KinCodeInfo::getFullInfo() const
-{
-    return FullInfo;
 }
 
 inline std::ostream &operator<<(std::ostream &os, const KinBase::KinCodeInfo &CodeInfo)

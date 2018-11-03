@@ -6,6 +6,8 @@
 #ifndef KINBASE_KINFILESYSTEM_H
 #define KINBASE_KINFILESYSTEM_H
 
+#include <string_view>
+
 namespace KinBase
 {
 
@@ -22,6 +24,7 @@ namespace KinBase
 
         ~KinFileSystem() = default;
 
+        static std::string_view GetFileNameFromFullPath(const std::string_view& Path);
     };
 
 }

@@ -44,7 +44,7 @@ int main()
         [](KinBase::KinException &e) {
             kInfo("Handle Exception :{}", e.getCondition());
 
-            if (std::stoi(e.getLineNumber()) == 23)
+            if (e.getLineNumber() == 23)
             {
                 return 1;
             }

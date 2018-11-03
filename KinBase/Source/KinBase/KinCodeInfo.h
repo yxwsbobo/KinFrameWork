@@ -1,5 +1,3 @@
-#include <utility>
-
 //
 // Created by Kin on 2018-10-31.
 // Copyright © 2018 jihuisoft. All rights reserved.
@@ -8,9 +6,8 @@
 #ifndef KINBASE_KINCODEINFO_H
 #define KINBASE_KINCODEINFO_H
 
+#include <string_view>
 #include <string>
-#include "KinMacroDefine.h"
-
 
 namespace KinBase
 {
@@ -24,40 +21,40 @@ namespace KinBase
     class KinCodeInfo
     {
     public:
-
         KinCodeInfo(
             const std::string &Message,
-            const std::string &Condition,
-            const std::string &FileName,
-            const std::string &FunctionName,
-            const std::string &LineNumber
+            const std::string_view &Condition,
+            const std::string_view &FileName,
+            const std::string_view &FunctionName,
+            int LineNumber
         );
 
         virtual ~KinCodeInfo() = default;
 
     public:
+        const std::string &getFullInfo() const;
 
         const std::string &getMessage() const;
 
         void setMessage(const std::string &Message);
 
-        const std::string &getCondition() const;
+        const std::string_view &getCondition() const;
 
-        void setCondition(const std::string &Condition);
+        void setCondition(const std::string_view &Condition);
 
-        const std::string &getFileName() const;
+        const std::string_view getFileName() const;
 
-        void setFileName(const std::string &FileName);
+        const std::string_view& getFullFileName() const;
 
-        const std::string &getFunctionName() const;
+        void setFileName(const std::string_view &FileName);
 
-        void setFunctionName(const std::string &FunctionName);
+        const std::string_view &getFunctionName() const;
 
-        const std::string &getLineNumber() const;
+        void setFunctionName(const std::string_view &FunctionName);
 
-        void setLineNumber(const std::string &LineNumber);
+        int getLineNumber() const;
 
-        const std::string &getFullInfo() const;
+        void setLineNumber(int LineNumber);
 
         template<typename T1, typename T2, typename T3, typename T4, typename... ArgTypes>
         static KinCodeInfo
@@ -68,17 +65,17 @@ namespace KinBase
 
     private:
         std::string Message;
-        std::string Condition;
-        std::string FileName;
-        std::string FunctionName;
-        std::string LineNumber;
-        std::string FullInfo;
+        std::string_view Condition;
+        std::string_view FileName;
+        std::string_view FunctionName;
+        int LineNumber;
+        mutable std::string FullInfo;
     };
 
 #define MakeCodeInfo(Condition, ...)                                     \
 KinBase::KinCodeInfo::Create(                                            \
         Condition,                                                       \
-        MACRO_GET_FILE_NAME(),                                           \
+        __FILE__,                                           \
         __FUNCTION__,                                                    \
         __LINE__,                                                        \
         ##__VA_ARGS__                                                    \

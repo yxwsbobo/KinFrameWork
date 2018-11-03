@@ -31,5 +31,6 @@ else()
 		${KIN_FRAMEWORK_PATH}/websocketpp
 		${KIN_FRAMEWORK_PATH}/boost
 		${KIN_FRAMEWORK_PATH}/KinSdl
+		${KIN_FRAMEWORK_PATH}/Date
 	)
 endif()

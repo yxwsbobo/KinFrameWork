@@ -1,20 +1,16 @@
+The source code in this project is released using the MIT License. There is no
+global license for the project because each file is licensed individually with
+different author names and/or dates.
 
+If you contribute to this project, please add your name to the license of each
+file you modify.  If you have already contributed to this project and forgot to
+add your name to the license, please feel free to submit a new P/R to add your
+name to the license in each file you modified.
 
-# BetterEnum
+For convenience, here is a copy of the MIT license found in each file except
+without author names or dates:
 
-Better Enums is released under the BSD 2-clause license. See
-[`LICENSE`][license].
-
-The original version of the library was developed by the author in the winter of
-2012-2013 at Hudson River Trading, as a replacement for an older generator
-called `BETTER_ENUM`.
-
-[license]: https://github.com/aantron/better-enums/blob/master/doc/LICENSE
-
-
-MIT License
-
-Copyright (c) 2017 effolkronium
+The MIT License (MIT)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

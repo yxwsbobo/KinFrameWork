@@ -6,10 +6,10 @@
 #ifndef KINBASE_KINEXCEPTION_H
 #define KINBASE_KINEXCEPTION_H
 
-#include <string>
 #include <exception>
 #include <functional>
-#include <ostream>
+#include <unordered_map>
+#include <string_view>
 
 #include "KinCodeInfo.h"
 
@@ -30,14 +30,17 @@ namespace KinBase
     public:
         using KinCodeInfo::KinCodeInfo;
         using HandlerType = std::function<int(KinBase::KinException &)>;
+        using HandlerListsType = std::unordered_map<std::string_view,HandlerType>;
 
         explicit KinException(const KinCodeInfo &Info);
 
         const char *what() const noexcept override;
 
-        static HandlerType &GetExceptionHandler();
+        static HandlerListsType &GetExceptionHandlerLists();
 
-        static void SetExceptionHandler(const HandlerType &handler);
+        static void AddExceptionHandler(const std::string_view& tag, const HandlerType &handler);
+
+//        static void RemoveExceptionHandler
 
         template<typename eType>
         static int Throw(const KinBase::KinCodeInfo &) noexcept(false);
