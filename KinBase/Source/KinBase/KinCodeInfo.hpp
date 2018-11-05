@@ -7,10 +7,10 @@
 #define KINBASE_KINCODEINFO_HPP
 
 #include "KinCodeInfo.h"
-#include "KinFileSystem.hpp"
 
 #include <fmt/fmt.h>
 #include <fmt/ostr.h>
+#include <iostream>
 
 
 inline KinBase::KinCodeInfo::KinCodeInfo(
@@ -26,7 +26,7 @@ inline KinBase::KinCodeInfo::KinCodeInfo(
 inline const std::string &KinBase::KinCodeInfo::getFullInfo() const
 {
     FullInfo = fmt::format(
-        "{}(){}:{} [{}]: {}", getFunctionName(), getFileName(), getLineNumber(), getCondition(), getMessage());
+        "{}():{}({}) [{}]: {}", getFunctionName(), getFileName(), getLineNumber(), getCondition(), getMessage());
 
     return FullInfo;
 }
@@ -53,7 +53,7 @@ inline void KinBase::KinCodeInfo::setCondition(const std::string_view &Condition
 
 inline const std::string_view KinBase::KinCodeInfo::getFileName() const
 {
-    return KinFileSystem::GetFileNameFromFullPath(FileName);
+    return getFullFileName().substr(getFullFileName().find_last_of(R"(\/)") + 1);
 }
 
 inline const std::string_view &KinBase::KinCodeInfo::getFullFileName() const
@@ -66,7 +66,14 @@ inline void KinBase::KinCodeInfo::setFileName(const std::string_view &FileName)
     KinCodeInfo::FileName = FileName;
 }
 
-inline const std::string_view &KinBase::KinCodeInfo::getFunctionName() const
+inline const std::string_view KinBase::KinCodeInfo::getFunctionName() const
+{
+    std::cout<<" or is :"<<GetFullFunctionName()<<"position :";
+    std::cout<<"position is :"<<GetFullFunctionName().find_last_of(R"(:)") + 1<<std::endl;
+    return GetFullFunctionName().substr(GetFullFunctionName().find_last_of(R"(:)") + 1);
+}
+
+inline const std::string_view &KinBase::KinCodeInfo::GetFullFunctionName() const
 {
     return FunctionName;
 }

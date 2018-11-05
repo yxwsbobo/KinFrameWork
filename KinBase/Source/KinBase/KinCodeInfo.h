@@ -48,7 +48,9 @@ namespace KinBase
 
         void setFileName(const std::string_view &FileName);
 
-        const std::string_view &getFunctionName() const;
+        const std::string_view getFunctionName() const;
+
+        const std::string_view &GetFullFunctionName() const;
 
         void setFunctionName(const std::string_view &FunctionName);
 

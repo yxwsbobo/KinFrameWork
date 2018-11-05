@@ -7,9 +7,9 @@
 #define KINBASE_KINLOG_HPP
 
 #include "KinLog.h"
-#include "KinFileSystem.hpp"
 
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <fmt/fmt.h>
 #include <fmt/ostr.h>
 
 
@@ -75,11 +75,13 @@ void KinBase::KinLog::Log(
     ArgTypes &&... args
 )
 {
+    std::string_view fileName = FileName;
+    std::string_view funName = FunctionName;
     lg->log(
         Level,
         "{}():{}({}): {}",
-        FunctionName,
-        KinFileSystem::GetFileNameFromFullPath(FileName),
+        funName.substr(funName.find_last_of(R"(:)") + 1),
+        fileName.substr(fileName.find_last_of(R"(\/)") + 1),
         LineNumber,
         fmt::format(std::forward<ArgTypes>(args)...));
 }

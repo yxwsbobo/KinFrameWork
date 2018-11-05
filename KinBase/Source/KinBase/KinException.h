@@ -7,9 +7,8 @@
 #define KINBASE_KINEXCEPTION_H
 
 #include <exception>
-#include <functional>
-#include <unordered_map>
 #include <string_view>
+#include <boost/signals2/signal.hpp>
 
 #include "KinCodeInfo.h"
 
@@ -29,18 +28,13 @@ namespace KinBase
     {
     public:
         using KinCodeInfo::KinCodeInfo;
-        using HandlerType = std::function<int(KinBase::KinException &)>;
-        using HandlerListsType = std::unordered_map<std::string_view,HandlerType>;
+        using HandlerType = boost::signals2::signal<int(KinBase::KinException&)>;
 
         explicit KinException(const KinCodeInfo &Info);
 
         const char *what() const noexcept override;
 
-        static HandlerListsType &GetExceptionHandlerLists();
-
-        static void AddExceptionHandler(const std::string_view& tag, const HandlerType &handler);
-
-//        static void RemoveExceptionHandler
+        static HandlerType& GetExceptionHandler();
 
         template<typename eType>
         static int Throw(const KinBase::KinCodeInfo &) noexcept(false);

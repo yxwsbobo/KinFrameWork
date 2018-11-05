@@ -19,18 +19,10 @@ inline const char *KinBase::KinException::what() const noexcept
     return getFullInfo().c_str();
 }
 
-inline KinBase::KinException::HandlerListsType &KinBase::KinException::GetExceptionHandlerLists()
+inline KinBase::KinException::HandlerType &KinBase::KinException::GetExceptionHandler()
 {
-    static HandlerListsType Lists{};
-    return Lists;
-}
-
-inline void KinBase::KinException::AddExceptionHandler(
-    const std::string_view &tag,
-    const KinBase::KinException::HandlerType &handler
-)
-{
-    GetExceptionHandlerLists()[tag] = handler;
+    static HandlerType Handler;
+    return Handler;
 }
 
 template<typename eType>
@@ -38,26 +30,12 @@ int KinBase::KinException::Throw(const KinBase::KinCodeInfo &Info) noexcept(fals
 {
     eType ExceptionObj{Info};
 
-
-
-    if (GetExceptionHandler())
-    {
-        try
-        {
-            auto Result = GetExceptionHandler()(ExceptionObj);
-            if (Result != 0)
-            {
-                return Result;
-            }
-        }
-        catch (...)
-        {
-
-        }
-    }
+    GetExceptionHandler()(ExceptionObj);
 
     throw ExceptionObj;
 }
+
+
 
 
 #endif //KINBASE_KINEXCEPTION_HPP

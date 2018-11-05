@@ -39,14 +39,11 @@ void KinBase::MyTestLib::LibRun()
 
 KinBase::MyTestLib::MyTestLib()
 {
-    auto Handler = KinBase::KinException::GetExceptionHandler();
-
-    KinBase::KinException::SetExceptionHandler([Handler](KinBase::KinException& e){
+    KinBase::KinException::GetExceptionHandler().connect([](KinBase::KinException& e){
         kInfo("MyLib Exception :{}", e.getCondition());
         int result =0;
         if(e.getLineNumber() == 27)
         {
-            result = Handler(e);
             return 1;
         }
         return result;
