@@ -6,12 +6,10 @@
 
 #include <iostream>
 
-#include <fmt/ostr.h>
 #include <KinBase/KinException.hpp>
 #include <KinBase/KinLog.hpp>
 #include "TestClass.h"
 #include "MyTestLib.h"
-#include <fmt/ostr.h>
 
 
 namespace NSpace
@@ -41,11 +39,6 @@ public:
 
 int main()
 {
-
-//    fmt::format("{}", KinBase::KinCodeInfo("1","2","3","4",5));
-    fmt::format("{}", MyTemp());
-
-
     kInfo("Start to Log");
     kWarn("number is {}", 5);
     kError();
@@ -77,7 +70,7 @@ int main()
     }
     catch (const KinBase::KinException &e)
     {
-//        kInfo("catch Exception :{}", e);
+        kInfo("catch Exception :{}", e);
     }
 
     KinBase::MyTestLib myTestLib;

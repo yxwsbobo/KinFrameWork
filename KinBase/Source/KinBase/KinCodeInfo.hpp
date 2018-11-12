@@ -10,7 +10,6 @@
 
 #include <fmt/fmt.h>
 #include <fmt/ostr.h>
-#include <iostream>
 
 
 inline KinBase::KinCodeInfo::KinCodeInfo(
@@ -68,8 +67,6 @@ inline void KinBase::KinCodeInfo::setFileName(const std::string_view &FileName)
 
 inline const std::string_view KinBase::KinCodeInfo::getFunctionName() const
 {
-    std::cout<<" or is :"<<GetFullFunctionName()<<"position :";
-    std::cout<<"position is :"<<GetFullFunctionName().find_last_of(R"(:)") + 1<<std::endl;
     return GetFullFunctionName().substr(GetFullFunctionName().find_last_of(R"(:)") + 1);
 }
 

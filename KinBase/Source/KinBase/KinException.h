@@ -12,7 +12,6 @@
 
 #include "KinCodeInfo.h"
 
-
 namespace KinBase
 {
     class KinException;
@@ -28,6 +27,7 @@ namespace KinBase
     {
     public:
         using KinCodeInfo::KinCodeInfo;
+
         using HandlerType = boost::signals2::signal<int(KinBase::KinException&)>;
 
         explicit KinException(const KinCodeInfo &Info);

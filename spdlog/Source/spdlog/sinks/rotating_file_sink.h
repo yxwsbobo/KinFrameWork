@@ -4,11 +4,15 @@
 //
 
 #pragma once
+
+#ifndef SPDLOG_H
+#error "spdlog.h must be included before this file."
+#endif
+
 #include "spdlog/details/file_helper.h"
 #include "spdlog/details/null_mutex.h"
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/sinks/base_sink.h"
-#include "spdlog/spdlog.h"
 
 #include <cerrno>
 #include <chrono>
@@ -24,7 +28,7 @@ namespace sinks {
 // Rotating file sink based on size
 //
 template<typename Mutex>
-class rotating_file_sink SPDLOG_FINAL : public base_sink<Mutex>
+class rotating_file_sink final : public base_sink<Mutex>
 {
 public:
     rotating_file_sink(filename_t base_filename, std::size_t max_size, std::size_t max_files)
