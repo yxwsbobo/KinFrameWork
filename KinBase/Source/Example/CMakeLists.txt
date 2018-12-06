@@ -5,10 +5,9 @@ project(Example)
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(KinBase)
+find_package(catch2)
 
-add_executable(Example main.cpp TestClass.cpp TestClass.h)
+add_executable(Example main.cpp TestClass.cpp TestClass.h ObjectTest.cpp)
 add_library(MyTestLib MyTestLib.cpp MyTestLib.h)
-
-add_executable(TestException TestException.cpp)
 
 target_link_libraries(Example MyTestLib)

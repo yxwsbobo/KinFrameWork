@@ -13,7 +13,6 @@
 
 namespace KinBase
 {
-
     namespace KinLog
     {
 

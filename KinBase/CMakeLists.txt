@@ -7,8 +7,4 @@ find_path(KinCommonPath KinCommonSetting.cmake)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KinCommonPath})
 include(KinCommonSetting)
 
-find_package(spdlog)
-find_package(KinBoost)
-find_package(catch2)
-
 add_subdirectory(Source)
