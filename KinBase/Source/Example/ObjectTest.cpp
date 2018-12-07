@@ -15,9 +15,9 @@
 //    {
 //        SetProperty<std::string>("name");
 //    }
-//    
+//
 //    std::string Name()
-//    { 
+//    {
 //        this->GetProperty<CarName>();
 //    }
 //    void Name(std::string Name)
@@ -35,12 +35,11 @@
 //void Test()
 //{
 //    Car c;
-//    
+//
 //    c.SetProperty<CarId>("mycar");
-//    
 //
 //    Driver driver;
-//    
+//
 //    driver.SetProperty<Car>(c);
-//    
+//
 //}
