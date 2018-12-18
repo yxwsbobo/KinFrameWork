@@ -10,7 +10,7 @@
 #include "KinCodeInfo.hpp"
 
 
-inline KinBase::KinException::KinException(const KinBase::KinCodeInfo &Info)
+inline KinBase::KinException::KinException(const KinBase::KinCodeInfo &Info) noexcept
     : KinCodeInfo{Info}
 { }
 
@@ -19,7 +19,7 @@ inline const char *KinBase::KinException::what() const noexcept
     return getFullInfo().c_str();
 }
 
-inline KinBase::KinException::HandlerType &KinBase::KinException::GetExceptionHandler()
+inline KinBase::KinException::HandlerType &KinBase::KinException::GetExceptionHandler() noexcept
 {
     static HandlerType Handler;
     return Handler;

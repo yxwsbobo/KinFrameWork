@@ -32,38 +32,38 @@ namespace KinBase
         virtual ~KinCodeInfo() = default;
 
     public:
-        const std::string &getFullInfo() const;
+        const std::string &getFullInfo() const noexcept;
 
-        const std::string &getMessage() const;
+        const std::string &getMessage() const noexcept;
 
-        void setMessage(const std::string &Message);
+        void setMessage(const std::string &Message) noexcept;
 
-        const std::string_view &getCondition() const;
+        const std::string_view &getCondition() const noexcept;
 
-        void setCondition(const std::string_view &Condition);
+        void setCondition(const std::string_view &Condition) noexcept;
 
-        const std::string_view getFileName() const;
+        const std::string_view getFileName() const noexcept;
 
-        const std::string_view& getFullFileName() const;
+        const std::string_view& getFullFileName() const noexcept;
 
-        void setFileName(const std::string_view &FileName);
+        void setFileName(const std::string_view &FileName) noexcept;
 
-        const std::string_view getFunctionName() const;
+        const std::string_view getFunctionName() const noexcept;
 
-        const std::string_view &GetFullFunctionName() const;
+        const std::string_view &GetFullFunctionName() const noexcept;
 
-        void setFunctionName(const std::string_view &FunctionName);
+        void setFunctionName(const std::string_view &FunctionName) noexcept;
 
-        int getLineNumber() const;
+        int getLineNumber() const noexcept;
 
-        void setLineNumber(int LineNumber);
+        void setLineNumber(int LineNumber) noexcept;
 
         template<typename T1, typename T2, typename T3, typename T4, typename... ArgTypes>
         static KinCodeInfo
-        Create(T1 &&Condition, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber, ArgTypes &&... args) noexcept(false);
+        Create(T1 &&Condition, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber, ArgTypes &&... args) noexcept;
 
         template<typename T1, typename T2, typename T3, typename T4>
-        static KinCodeInfo Create(T1 &&Condition, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber) noexcept(false);
+        static KinCodeInfo Create(T1 &&Condition, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber) noexcept;
 
     private:
         std::string Message;

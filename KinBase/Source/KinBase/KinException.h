@@ -30,11 +30,11 @@ namespace KinBase
 
         using HandlerType = boost::signals2::signal<int(KinBase::KinException&)>;
 
-        explicit KinException(const KinCodeInfo &Info);
+        explicit KinException(const KinCodeInfo &Info) noexcept;
 
         const char *what() const noexcept override;
 
-        static HandlerType& GetExceptionHandler();
+        static HandlerType& GetExceptionHandler() noexcept;
 
         template<typename eType>
         static int Throw(const KinBase::KinCodeInfo &) noexcept(false);

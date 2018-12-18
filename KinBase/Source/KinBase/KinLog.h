@@ -16,9 +16,9 @@ namespace KinBase
     namespace KinLog
     {
 
-        std::shared_ptr<spdlog::logger> &GetDefaultLogger();
+        std::shared_ptr<spdlog::logger> &GetDefaultLogger() noexcept;
 
-        void SetDefaultLogger(const std::shared_ptr<spdlog::logger> &Logger);
+        void SetDefaultLogger(const std::shared_ptr<spdlog::logger> &Logger) noexcept;
 
         template<typename... ArgTypes>
         static std::shared_ptr<spdlog::logger> CreateLogger(ArgTypes &&... args);
@@ -49,7 +49,7 @@ namespace KinBase
         class KinDefaultLoggerWarpper
         {
         private:
-            friend std::shared_ptr<spdlog::logger> &GetDefaultLogger();
+            friend std::shared_ptr<spdlog::logger> &GetDefaultLogger() noexcept;
 
             std::shared_ptr<spdlog::logger> Logger;
 

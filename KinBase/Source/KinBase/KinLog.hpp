@@ -23,13 +23,13 @@ inline KinBase::KinLog::KinDefaultLoggerWarpper::KinDefaultLoggerWarpper()
     Logger->set_pattern("%^%Y-%m-%d %T|%t|%n [%L] %v%$");
 }
 
-inline std::shared_ptr<spdlog::logger> &KinBase::KinLog::GetDefaultLogger()
+inline std::shared_ptr<spdlog::logger> &KinBase::KinLog::GetDefaultLogger() noexcept
 {
     static KinDefaultLoggerWarpper DefaultLogger;
     return DefaultLogger.Logger;
 }
 
-inline void KinBase::KinLog::SetDefaultLogger(const std::shared_ptr<spdlog::logger> &Logger)
+inline void KinBase::KinLog::SetDefaultLogger(const std::shared_ptr<spdlog::logger> &Logger) noexcept
 {
     GetDefaultLogger() = Logger;
 }
