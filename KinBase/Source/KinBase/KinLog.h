@@ -1,10 +1,9 @@
+#pragma once
+
 //
 // Created by Kin on 2018-10-31.
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
-
-#ifndef KINBASE_KINLOG_H
-#define KINBASE_KINLOG_H
 
 #include <memory>
 #include <string>
@@ -77,4 +76,4 @@ KinBase::KinLog::Log(                                          \
 #define kError(...) __Kin_LogHelp(spdlog::level::err, ##__VA_ARGS__)
 
 }
-#endif //KINBASE_KINLOG_H
+

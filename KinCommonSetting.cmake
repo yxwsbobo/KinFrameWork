@@ -32,5 +32,7 @@ else()
 		${KIN_FRAMEWORK_PATH}/boost
 		${KIN_FRAMEWORK_PATH}/KinSdl
 		${KIN_FRAMEWORK_PATH}/Date
+		${KIN_FRAMEWORK_PATH}/taskflow
+		${KIN_FRAMEWORK_PATH}/concurrentqueue
 	)
 endif()

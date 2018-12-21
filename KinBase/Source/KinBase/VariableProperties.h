@@ -1,10 +1,9 @@
+#pragma once
+
 //
 // Created by Kin on 2018/4/23.
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
-
-#ifndef KINBASE_VARIABLEPROPERTIES_H
-#define KINBASE_VARIABLEPROPERTIES_H
 
 #include "EventDispatcher.hpp"
 #include <any>
@@ -197,4 +196,4 @@ namespace KinBase
 
 
 }
-#endif //KINBASE_VARIABLEPROPERTIES_H
+

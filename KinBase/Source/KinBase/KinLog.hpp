@@ -1,10 +1,9 @@
+#pragma once
+
 //
 // Created by Kin on 2018-10-31.
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
-
-#ifndef KINBASE_KINLOG_HPP
-#define KINBASE_KINLOG_HPP
 
 #include "KinLog.h"
 
@@ -101,4 +100,3 @@ KinBase::KinLog::Log(T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumb
 }
 
 
-#endif //KINBASE_KINLOG_HPP

@@ -10,6 +10,7 @@
 #include <KinBase/KinLog.hpp>
 #include "TestClass.h"
 #include "MyTestLib.h"
+#include "TestCircleBuffer.h"
 
 
 namespace NSpace
@@ -39,6 +40,10 @@ public:
 
 int main()
 {
+    KinBase::TestCircleBuffer tb;
+    tb.Run();
+
+    return 0;
     kInfo("Start to Log");
     kWarn("number is {}", 5);
     kError();

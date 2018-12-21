@@ -1,10 +1,9 @@
+#pragma once
+
 //
 // Created by Kin on 2018/4/30.
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
-
-#ifndef KINBASE_OBJECT_H
-#define KINBASE_OBJECT_H
 
 #include <memory>
 #include "VariableProperties.h"
@@ -35,4 +34,4 @@ namespace KinBase
     };
 
 }
-#endif //KINBASE_OBJECT_H
+

@@ -1,10 +1,10 @@
+#pragma once
+
 //
 // Created by Kin on 2018-10-31.
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
 
-#ifndef KINBASE_KINCODEINFO_HPP
-#define KINBASE_KINCODEINFO_HPP
 
 #include "KinCodeInfo.h"
 
@@ -122,5 +122,3 @@ inline std::ostream &operator<<(std::ostream &os, const KinBase::KinCodeInfo &Co
     return os;
 }
 
-
-#endif //KINBASE_KINCODEINFO_HPP

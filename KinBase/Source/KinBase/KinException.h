@@ -1,16 +1,16 @@
+#pragma once
+
 //
 // Created by Kin on 2018/9/23 0023.
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
-
-#ifndef KINBASE_KINEXCEPTION_H
-#define KINBASE_KINEXCEPTION_H
 
 #include <exception>
 #include <string_view>
 #include <boost/signals2/signal.hpp>
 
 #include "KinCodeInfo.h"
+
 
 namespace KinBase
 {
@@ -28,13 +28,13 @@ namespace KinBase
     public:
         using KinCodeInfo::KinCodeInfo;
 
-        using HandlerType = boost::signals2::signal<int(KinBase::KinException&)>;
+        using HandlerType = boost::signals2::signal<int(KinBase::KinException &)>;
 
         explicit KinException(const KinCodeInfo &Info) noexcept;
 
         const char *what() const noexcept override;
 
-        static HandlerType& GetExceptionHandler() noexcept;
+        static HandlerType &GetExceptionHandler() noexcept;
 
         template<typename eType>
         static int Throw(const KinBase::KinCodeInfo &) noexcept(false);
@@ -65,4 +65,3 @@ MakeCodeInfo(#Condition,##__VA_ARGS__))
 }
 
 
-#endif //KINBASE_KINEXCEPTION_H

@@ -1,10 +1,9 @@
+#pragma once
+
 //
 // Created by Kin on 2018-10-31.
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
-
-#ifndef KINBASE_KINEXCEPTION_HPP
-#define KINBASE_KINEXCEPTION_HPP
 
 #include "KinException.h"
 #include "KinCodeInfo.hpp"
@@ -36,6 +35,3 @@ int KinBase::KinException::Throw(const KinBase::KinCodeInfo &Info) noexcept(fals
 }
 
 
-
-
-#endif //KINBASE_KINEXCEPTION_HPP

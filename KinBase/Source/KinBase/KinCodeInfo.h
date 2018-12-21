@@ -1,13 +1,13 @@
+#pragma once
+
 //
 // Created by Kin on 2018-10-31.
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
 
-#ifndef KINBASE_KINCODEINFO_H
-#define KINBASE_KINCODEINFO_H
-
 #include <string_view>
 #include <string>
+
 
 namespace KinBase
 {
@@ -44,7 +44,7 @@ namespace KinBase
 
         const std::string_view getFileName() const noexcept;
 
-        const std::string_view& getFullFileName() const noexcept;
+        const std::string_view &getFullFileName() const noexcept;
 
         void setFileName(const std::string_view &FileName) noexcept;
 
@@ -84,4 +84,4 @@ KinBase::KinCodeInfo::Create(                                            \
         )
 
 }
-#endif //KINBASE_KINCODEINFO_H
+

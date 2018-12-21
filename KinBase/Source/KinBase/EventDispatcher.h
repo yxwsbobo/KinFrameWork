@@ -1,10 +1,9 @@
+#pragma once
+
 //
 // Created by Kin on 2018/4/21.
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
-
-#ifndef KINBASE_EVENTDISPATCHER_H
-#define KINBASE_EVENTDISPATCHER_H
 
 #include <any>
 #include <shared_mutex>
@@ -502,4 +501,4 @@ namespace KinBase
     };
 
 }
-#endif //KINBASE_EVENTDISPATCHER_H
+
