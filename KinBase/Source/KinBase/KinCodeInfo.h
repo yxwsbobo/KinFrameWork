@@ -27,7 +27,7 @@ namespace KinBase
             const std::string_view &FileName,
             const std::string_view &FunctionName,
             int LineNumber
-        );
+        ) noexcept;
 
         virtual ~KinCodeInfo() = default;
 

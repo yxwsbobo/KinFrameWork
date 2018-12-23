@@ -6,6 +6,10 @@
 //
 #include <concurrentqueue/blockingconcurrentqueue.h>
 #include <functional>
+#include <atomic>
+#include <vector>
+#include <future>
+#include "KinBase.h"
 
 namespace KinBase
 {
@@ -19,28 +23,37 @@ namespace KinBase
     class ThreadPool
     {
     public:
-        explicit ThreadPool(std::size_t Size = 4);
+        using TaskType = std::function <void()>;
 
-        ~ThreadPool() = default;
+        static ThreadPool &DefaultPool() noexcept;
 
-        ThreadPool(const ThreadPool&) = delete;
-        ThreadPool(ThreadPool&& pool);
+    public:
+        explicit ThreadPool(std::size_t numberOfThreads) noexcept;
 
-
-        template <typename T,typename ...ArgTypes>
-        void Invoke(T&& fun,ArgTypes&&... args)
-        {
-            auto task = [=]{
-                return fun(std::forward<ArgTypes>(args)...);
-            };
+        ~ThreadPool() noexcept;
 
 
-        }
+        ThreadPool(const ThreadPool &) = delete;
+        ThreadPool &operator=(const ThreadPool &) = delete;
+
+        ThreadPool(ThreadPool &&pool) = delete;
+        ThreadPool &operator=(ThreadPool &&pool) = delete;
+
+
+        void IncreaseThreads(std::size_t numbers) noexcept;
+
+        std::size_t GetThreadsNumber() const noexcept;
+
+        template <typename T, typename... T2>
+        std::future<std::invoke_result_t<T,T2...>> Submit(T &&f, T2 &&... args) noexcept;
 
     private:
-        std::size_t MaxThreads;
-        std::size_t CurrentThreads;
-        moodycamel::BlockingConcurrentQueue<std::function<void(void)>> TaskQueue;
+        void DoTask() noexcept;
+
+    private:
+        std::atomic_bool RunningFlag = true;
+        moodycamel::BlockingConcurrentQueue <TaskType> Tasks;
+        std::vector <std::thread> Workers;
     };
 
 }

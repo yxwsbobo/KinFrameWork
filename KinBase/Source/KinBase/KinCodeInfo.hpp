@@ -18,7 +18,7 @@ inline KinBase::KinCodeInfo::KinCodeInfo(
     const std::string_view &FileName,
     const std::string_view &FunctionName,
     int LineNumber
-)
+) noexcept
     : Message(Message), Condition(Condition), FileName(FileName), FunctionName(FunctionName), LineNumber(LineNumber)
 { }
 
@@ -116,7 +116,7 @@ KinBase::KinCodeInfo KinBase::KinCodeInfo::Create(
         fmt::format("Condition Fail :{}", Condition));
 }
 
-inline std::ostream &operator<<(std::ostream &os, const KinBase::KinCodeInfo &CodeInfo)
+inline std::ostream &operator<<(std::ostream &os, const KinBase::KinCodeInfo &CodeInfo) noexcept
 {
     os << CodeInfo.getFullInfo();
     return os;

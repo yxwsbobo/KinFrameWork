@@ -9,5 +9,6 @@ find_package(catch2)
 
 add_executable(Example main.cpp TestClass.cpp TestClass.h ObjectTest.cpp TestCircleBuffer.cpp TestCircleBuffer.h)
 add_library(MyTestLib MyTestLib.cpp MyTestLib.h)
+add_executable(SomeTest SomeTest.cpp)
 
 target_link_libraries(Example MyTestLib)

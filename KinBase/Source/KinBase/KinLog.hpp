@@ -12,7 +12,7 @@
 #include <fmt/ostr.h>
 
 
-inline KinBase::KinLog::KinDefaultLoggerWarpper::KinDefaultLoggerWarpper()
+inline KinBase::KinLog::KinDefaultLoggerWarpper::KinDefaultLoggerWarpper() noexcept
 {
     Logger = spdlog::stdout_color_mt("log");
     spdlog::set_pattern("%Y-%m-%d %T|%t|%n [%L] %v");
@@ -40,7 +40,7 @@ std::shared_ptr<spdlog::logger> KinBase::KinLog::CreateLogger(ArgTypes &&... arg
 }
 
 template<typename T1, typename T2, typename T3, typename T4, typename... ArgTypes>
-void KinBase::KinLog::Log(T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber, ArgTypes &&... args)
+void KinBase::KinLog::Log(T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber, ArgTypes &&... args) noexcept
 {
     return Log(
         std::forward<T1>(Level),
@@ -53,7 +53,7 @@ void KinBase::KinLog::Log(T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&Lin
 }
 
 template<typename T1, typename T2, typename T3, typename T4>
-void KinBase::KinLog::Log(T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber)
+void KinBase::KinLog::Log(T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber) noexcept
 {
     return Log(
         std::forward<T1>(Level),
@@ -72,7 +72,7 @@ void KinBase::KinLog::Log(
     T4 &&LineNumber,
     std::shared_ptr<spdlog::logger> lg,
     ArgTypes &&... args
-)
+) noexcept
 {
     std::string_view fileName = FileName;
     std::string_view funName = FunctionName;
@@ -87,7 +87,8 @@ void KinBase::KinLog::Log(
 
 template<typename T1, typename T2, typename T3, typename T4>
 void
-KinBase::KinLog::Log(T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber, std::shared_ptr<spdlog::logger> lg)
+KinBase::KinLog::Log(T1 &&Level, T2 &&FileName, T3 &&FunctionName,
+        T4 &&LineNumber, std::shared_ptr<spdlog::logger> lg) noexcept
 {
     return Log(
         std::forward<T1>(Level),

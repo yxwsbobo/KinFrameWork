@@ -25,10 +25,10 @@ namespace KinBase
         template<typename T1, typename T2, typename T3, typename T4, typename... ArgTypes>
         static void Log(
             T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber, ArgTypes &&... args
-        );
+        ) noexcept;
 
         template<typename T1, typename T2, typename T3, typename T4>
-        static void Log(T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber);
+        static void Log(T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber) noexcept;
 
         template<typename T1, typename T2, typename T3, typename T4, typename... ArgTypes>
         static void Log(
@@ -38,12 +38,12 @@ namespace KinBase
             T4 &&LineNumber,
             std::shared_ptr<spdlog::logger> lg,
             ArgTypes &&... args
-        );
+        ) noexcept;
 
         template<typename T1, typename T2, typename T3, typename T4>
         static void Log(
             T1 &&Level, T2 &&FileName, T3 &&FunctionName, T4 &&LineNumber, std::shared_ptr<spdlog::logger> lg
-        );
+        ) noexcept;
 
         class KinDefaultLoggerWarpper
         {
@@ -52,7 +52,7 @@ namespace KinBase
 
             std::shared_ptr<spdlog::logger> Logger;
 
-            KinDefaultLoggerWarpper();
+            KinDefaultLoggerWarpper() noexcept;
 
             ~KinDefaultLoggerWarpper() = default;
         };
