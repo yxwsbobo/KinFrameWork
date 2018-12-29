@@ -2,34 +2,36 @@
 // Created by Kin on 2018/12/22.
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
-#include <KinBase/KinBase.h>
-#include <memory>
-#include <iostream>
-class MyClas
+
+#include <KinBase/ThreadPool.hpp>
+#include <KinBase/random.hpp>
+#include <KinBase/ObjectTransferTrack.h>
+
+class myClass
 {
 public:
-    MyClas() = default;
+    myClass() = default;
+    void operator()(int,double){};
+    void Run(int,double){};
 
-    int operator()(int,double)
-    {
-        return 5;
-    }
-
-    int Run(int,double)
-    {
-        return 7;
-    }
+    int Num;
 };
 
 int main()
 {
-    auto mc = std::make_shared<MyClas>();
+    myClass mc;
 
-    MyClas mmc;
+    auto smc = std::make_shared<myClass>();
 
-    int Result = KinBase::Invoke(mc,3,2.0);
+    auto& pool = KinBase::ThreadPool::DefaultPool();
 
-    std::cout<<Result<<std::endl;
+    pool.Submit(mc,3,5.0);
+    pool.Submit(smc,3,5.0);
+//
+    pool.Submit(&myClass::Run,mc,3,5.0);
+    pool.Submit(&myClass::Run,smc,3,5.0);
 
+    pool.Submit(&myClass::Num, mc);
+    pool.Submit(&myClass::Num, smc);
     return 0;
 }

@@ -7,6 +7,7 @@
 #include "ThreadPool.h"
 #include "KinLog.hpp"
 #include "KinException.hpp"
+#include "KinBase.hpp"
 #include <memory>
 #include <type_traits>
 
@@ -71,14 +72,14 @@ inline void KinBase::ThreadPool::DoTask() noexcept
 }
 
 template <typename T, typename... T2>
-std::future <std::invoke_result_t <T, T2...>>
+decltype(auto)
 KinBase::ThreadPool::Submit(T &&f, T2 &&... args) noexcept
 {
-    using ReturnType = std::invoke_result_t <T, T2...>;
+    auto taskFun = KinBase::MakeInvoke(std::forward<T>(f),std::forward<T2>(args)...);
 
-    auto task = std::make_shared <std::packaged_task <ReturnType()>>([f,args...] () mutable {
-        return std::invoke(f,std::forward<T2>(args)...);
-    });
+    using ReturnType = decltype(taskFun());
+
+    auto task = std::make_shared <std::packaged_task <ReturnType()>>(taskFun);
 
     Tasks.enqueue([task] {
         (*task)();

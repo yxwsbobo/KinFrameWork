@@ -45,7 +45,7 @@ namespace KinBase
         std::size_t GetThreadsNumber() const noexcept;
 
         template <typename T, typename... T2>
-        std::future<std::invoke_result_t<T,T2...>> Submit(T &&f, T2 &&... args) noexcept;
+        decltype(auto) Submit(T &&f, T2 &&... args) noexcept;
 
     private:
         void DoTask() noexcept;

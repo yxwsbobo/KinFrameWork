@@ -19,25 +19,12 @@ namespace KinBase
     class TT;
 
     template <typename T, typename... Args>
-    auto Invoke(T&& fun, Args&& ... args)
-    {
-        return std::invoke(std::forward<T>(fun),std::forward<Args>(args)...);
-    }
+    decltype(auto) Invoke(T&& fun, Args&& ... args);
 
     template<typename SharedObj, typename... Args>
-    auto Invoke(std::shared_ptr<SharedObj> &obj, Args &&... args)
-    {
-        return KinBase::Invoke(*obj, std::forward<Args>(args)...);
-    }
+    decltype(auto) Invoke(std::shared_ptr<SharedObj> &obj, Args &&... args);
 
     template <typename T,typename... Args>
-    auto MakeInvoke(T&& fun,Args&&... copyArgs)
-    {
-        return [fun,copyArgs...](auto... args){
-            return KinBase::Invoke(fun, std::forward<Args>(copyArgs)...,
-                std::forward<decltype(args)...>(args...));
-        };
-    }
-
+    decltype(auto) MakeInvoke(T&& fun,Args&&... copyArgs);
 
 }
