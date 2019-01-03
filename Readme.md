@@ -15,10 +15,6 @@ some lib write by me
 
     Easy to use Log wapper with spdlog
 
-> KinLua
-
-    Easy C++ wapper with lua
-
 ---
 > KinExcetpion
 
