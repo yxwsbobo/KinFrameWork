@@ -5,18 +5,27 @@
 // Copyright © 2018 jihuisoft. All rights reserved.
 //
 #include "KinBase.h"
+#include "KinException.hpp"
+#include <type_traits>
 
 
 template<typename T, typename... Args>
 decltype(auto) KinBase::Invoke(T &&fun, Args &&... args)
 {
-    return std::invoke(std::forward<T>(fun), std::forward<Args>(args)...);
-}
-
-template<typename SharedObj, typename... Args>
-decltype(auto) KinBase::Invoke(std::shared_ptr<SharedObj> &obj, Args &&... args)
-{
-    return KinBase::Invoke(*obj, std::forward<Args>(args)...);
+    if constexpr (std::is_convertible_v<T,std::shared_ptr<void>>)
+    {
+        return std::invoke(*fun, std::forward<Args>(args)...);
+    }
+    else if constexpr (std::is_convertible_v<T,std::weak_ptr<void>>)
+    {
+        auto fn = fun.lock();
+        Must(fn,"Invoke a not exist week_ptr");
+        return std::invoke(*fn, std::forward<Args>(args)...);
+    }
+    else
+    {
+        return std::invoke(std::forward<T>(fun), std::forward<Args>(args)...);
+    }
 }
 
 template<typename T, typename... Args>

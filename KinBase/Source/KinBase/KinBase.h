@@ -21,9 +21,6 @@ namespace KinBase
     template <typename T, typename... Args>
     decltype(auto) Invoke(T&& fun, Args&& ... args);
 
-    template<typename SharedObj, typename... Args>
-    decltype(auto) Invoke(std::shared_ptr<SharedObj> &obj, Args &&... args);
-
     template <typename T,typename... Args>
     decltype(auto) MakeInvoke(T&& fun,Args&&... copyArgs);
 
